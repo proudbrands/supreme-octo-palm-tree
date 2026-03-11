@@ -1,9 +1,27 @@
 /* ==========================================================================
    Components — approved component styles from docs/components.md
+   All cards, badges, grids, scroll rows, section headers, pills, newsletter.
    ========================================================================== */
 
-/* Card — shared
+/* Card — base
    ========================================================================== */
+
+.va-card {
+	background: var(--wp--preset--color--white);
+	border-radius: var(--va-radius-lg);
+	overflow: hidden;
+	box-shadow:
+		0 1px 3px rgba(0, 0, 0, 0.06),
+		0 1px 2px rgba(0, 0, 0, 0.04);
+	transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.va-card:hover {
+	box-shadow:
+		0 8px 25px rgba(0, 0, 0, 0.08),
+		0 4px 10px rgba(0, 0, 0, 0.04);
+	transform: translateY(-3px);
+}
 
 .va-card__link {
 	display: block;
@@ -11,21 +29,13 @@
 	color: inherit;
 }
 
-/* Card — listing variant
+.va-card__link:hover {
+	text-decoration: none;
+	color: inherit;
+}
+
+/* Card — image
    ========================================================================== */
-
-.va-card--listing {
-	background: var(--wp--preset--color--white);
-	border-radius: 8px;
-	overflow: hidden;
-	box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-	transition: box-shadow 0.2s ease, transform 0.2s ease;
-}
-
-.va-card--listing:hover {
-	box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-	transform: translateY(-2px);
-}
 
 .va-card__image {
 	position: relative;
@@ -37,51 +47,135 @@
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
+	transition: transform 0.4s ease;
+}
+
+.va-card:hover .va-card__img,
+.va-card__link:hover .va-card__img {
+	transform: scale(1.03);
 }
 
 .va-card__image--placeholder {
-	background-color: var(--wp--preset--color--grey-200);
+	background-color: #f5f5f5;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' fill='none' viewBox='0 0 24 24' stroke='rgba(0,0,0,0.08)' stroke-width='1'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 48px 48px;
 }
 
+/* Card — image wide variant (area cards) */
+.va-card__image--wide {
+	aspect-ratio: 16 / 9;
+}
+
+/* Card — body
+   ========================================================================== */
+
 .va-card__body {
-	padding: 1rem;
+	padding: 1.25rem;
 }
 
 .va-card__title {
-	font-size: 1.1rem;
+	font-size: 1.05rem;
 	font-weight: 600;
 	color: var(--wp--preset--color--primary);
-	margin: 0 0 0.25rem;
+	margin: 0 0 0.3rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .va-card__tagline {
 	font-size: 0.9rem;
-	color: var(--wp--preset--color--grey-600);
+	color: #666;
 	margin: 0 0 0.5rem;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
 }
 
 .va-card__meta {
 	display: flex;
-	gap: 0.75rem;
+	align-items: center;
+	gap: 0.5rem;
+	margin-top: 0.75rem;
 	font-size: 0.8rem;
-	color: var(--wp--preset--color--grey-600);
+	color: #888;
+}
+
+/* Card — listing variant
+   ========================================================================== */
+
+/* Featured / premium listing accent border */
+.va-card--listing.va-card--featured,
+.va-card--listing.va-card--premium {
+	border-left: 3px solid var(--wp--preset--color--accent);
+}
+
+/* Area name dot separator */
+.va-card__area + .va-card__price::before {
+	content: "·";
+	margin-right: 0.5rem;
+	color: #ccc;
+}
+
+/* Price range teal */
+.va-card__price {
+	color: var(--wp--preset--color--teal);
+}
+
+/* Card — event variant
+   ========================================================================== */
+
+.va-card--event .va-card__body {
+	display: flex;
+	gap: 1rem;
+	padding: 1.25rem;
+}
+
+.va-card__date {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-width: 56px;
+	width: 56px;
+	height: 56px;
+	flex-shrink: 0;
+	background: var(--wp--preset--color--light);
+	border-radius: var(--va-radius-md);
+	text-align: center;
+}
+
+.va-card__date-day {
+	font-size: 1.35rem;
+	font-weight: 700;
+	color: var(--wp--preset--color--accent);
+	line-height: 1;
+}
+
+.va-card__date-month {
+	font-size: 0.65rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	color: #888;
+}
+
+.va-card__venue {
+	font-size: 0.85rem;
+	color: #666;
+	margin: 0.15rem 0 0;
+}
+
+.va-card__time {
+	font-size: 0.8rem;
+	color: var(--wp--preset--color--teal);
 }
 
 /* Card — walk variant
    ========================================================================== */
-
-.va-card--walk {
-	background: var(--wp--preset--color--white);
-	border-radius: 8px;
-	overflow: hidden;
-	box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-	transition: box-shadow 0.2s ease, transform 0.2s ease;
-}
-
-.va-card--walk:hover {
-	box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-	transform: translateY(-2px);
-}
 
 .va-card__stats {
 	display: flex;
@@ -92,12 +186,16 @@
 
 .va-card__stat {
 	display: inline-block;
-	padding: 0.15rem 0.5rem;
+	padding: 0.25rem 0.65rem;
 	font-size: 0.75rem;
 	font-weight: 500;
 	color: var(--wp--preset--color--grey-600);
-	background: var(--wp--preset--color--light);
-	border-radius: 4px;
+	background: #f5f5f5;
+	border-radius: 20px;
+}
+
+.va-card__stat--dog::before {
+	content: "🐾 ";
 }
 
 .va-card__stat--easy {
@@ -115,136 +213,136 @@
 	background: rgba(230, 57, 70, 0.1);
 }
 
+.va-card__terrain {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.35rem;
+	margin-top: 0.5rem;
+}
+
+.va-card__terrain-tag {
+	display: inline-block;
+	padding: 0.15rem 0.5rem;
+	font-size: 0.7rem;
+	font-weight: 500;
+	color: var(--wp--preset--color--primary);
+	background: var(--wp--preset--color--grey-200);
+	border-radius: var(--va-radius-sm);
+}
+
+.va-card__parking {
+	margin: 0.5rem 0 0;
+	font-size: 0.8rem;
+	color: var(--wp--preset--color--grey-600);
+	line-height: 1.4;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.va-card__seasonal {
+	margin: 0.4rem 0 0;
+	padding-top: 0.4rem;
+	border-top: 1px solid var(--wp--preset--color--grey-200);
+	font-size: 0.75rem;
+	font-style: italic;
+	color: var(--wp--preset--color--grey-600);
+	line-height: 1.4;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
 /* Card — area variant
    ========================================================================== */
 
-.va-card--area {
-	background: var(--wp--preset--color--white);
-	border-radius: 8px;
-	overflow: hidden;
-	box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-	transition: box-shadow 0.2s ease, transform 0.2s ease;
-}
-
-.va-card--area:hover {
-	box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-	transform: translateY(-2px);
-}
-
-.va-card__image--wide {
+.va-card--area .va-card__image {
 	aspect-ratio: 16 / 9;
+}
+
+.va-card--area .va-card__image::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 60%);
+	pointer-events: none;
+}
+
+.va-card--area .va-card__overlay {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: 1.25rem;
+	z-index: 2;
+}
+
+.va-card--area .va-card__overlay .va-card__title {
+	color: var(--wp--preset--color--white);
+	font-size: 1.2rem;
+	font-weight: 600;
+	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+	white-space: normal;
+	overflow: visible;
+	text-overflow: unset;
 }
 
 .va-card__population {
 	font-size: 0.8rem;
-	color: var(--wp--preset--color--grey-600);
+	color: rgba(255, 255, 255, 0.8);
+	margin-top: 0.25rem;
 }
 
-/* Card — event variant
-   ========================================================================== */
-
-.va-card--event {
-	background: var(--wp--preset--color--white);
-	border-radius: 8px;
-	overflow: hidden;
-	box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-	transition: box-shadow 0.2s ease, transform 0.2s ease;
-}
-
-.va-card--event:hover {
-	box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-	transform: translateY(-2px);
-}
-
-.va-card--event .va-card__body {
-	display: flex;
-	gap: 1rem;
-	padding: 1rem;
-}
-
-.va-card__date {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	min-width: 3rem;
-	padding: 0.5rem;
-	background: var(--wp--preset--color--light);
-	border-radius: 6px;
-	text-align: center;
-}
-
-.va-card__date-day {
-	font-size: 1.25rem;
-	font-weight: 700;
-	color: var(--wp--preset--color--accent);
-	line-height: 1;
-}
-
-.va-card__date-month {
-	font-size: 0.7rem;
-	font-weight: 600;
-	text-transform: uppercase;
-	color: var(--wp--preset--color--grey-600);
-}
-
-.va-card__venue {
-	font-size: 0.85rem;
-	color: var(--wp--preset--color--grey-600);
-	margin: 0.15rem 0 0;
-}
-
-.va-card__time {
-	font-size: 0.8rem;
-	color: var(--wp--preset--color--teal);
-}
-
-/* Badge
+/* Badges
    ========================================================================== */
 
 .va-badge {
 	display: inline-block;
-	padding: 0.2rem 0.6rem;
-	font-size: 0.7rem;
-	font-weight: 600;
+	padding: 0.3rem 0.65rem;
+	font-size: 0.65rem;
+	font-weight: 700;
 	text-transform: uppercase;
-	letter-spacing: 0.03em;
-	border-radius: 4px;
-	line-height: 1.4;
+	letter-spacing: 0.04em;
+	border-radius: 6px;
+	line-height: 1.3;
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
 }
 
 .va-badge--category {
-	background: var(--wp--preset--color--primary);
+	background: rgba(29, 53, 87, 0.85);
 	color: var(--wp--preset--color--white);
 }
 
 .va-badge--featured {
-	background: var(--wp--preset--color--accent);
+	background: rgba(230, 57, 70, 0.9);
 	color: var(--wp--preset--color--white);
 }
 
 .va-badge--free {
-	background: var(--wp--preset--color--teal);
+	background: rgba(42, 157, 143, 0.9);
 	color: var(--wp--preset--color--white);
 }
 
 .va-badge--family {
-	background: #F4A261;
+	background: rgba(244, 162, 97, 0.9);
 	color: var(--wp--preset--color--dark);
 }
 
 .va-badge--easy {
-	background: var(--wp--preset--color--teal);
+	background: rgba(42, 157, 143, 0.9);
 	color: var(--wp--preset--color--white);
 }
 
 .va-badge--moderate {
-	background: #F4A261;
+	background: rgba(245, 158, 11, 0.9);
 	color: var(--wp--preset--color--dark);
 }
 
 .va-badge--challenging {
-	background: var(--wp--preset--color--accent);
+	background: rgba(230, 57, 70, 0.9);
 	color: var(--wp--preset--color--white);
 }
 
@@ -266,11 +364,17 @@
 
 .va-grid {
 	display: grid;
-	gap: 1.5rem;
+	gap: 1rem;
+}
+
+@media (min-width: 640px) {
+	.va-grid {
+		gap: 1.5rem;
+	}
 }
 
 .va-grid--3 {
-	grid-template-columns: repeat(1, 1fr);
+	grid-template-columns: 1fr;
 }
 
 @media (min-width: 640px) {
@@ -286,7 +390,7 @@
 }
 
 .va-grid--4 {
-	grid-template-columns: repeat(1, 1fr);
+	grid-template-columns: 1fr;
 }
 
 @media (min-width: 640px) {
@@ -297,6 +401,12 @@
 
 @media (min-width: 1024px) {
 	.va-grid--4 {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+@media (min-width: 1280px) {
+	.va-grid--4 {
 		grid-template-columns: repeat(4, 1fr);
 	}
 }
@@ -305,12 +415,21 @@
    ========================================================================== */
 
 .va-scroll-row {
-	margin: 0;
+	position: relative;
+	margin: 0 -1.5rem;
+	padding: 0 1.5rem;
+}
+
+@media (min-width: 768px) {
+	.va-scroll-row {
+		margin: 0 -2rem;
+		padding: 0 2rem;
+	}
 }
 
 .va-scroll-row__inner {
 	display: flex;
-	gap: 1.25rem;
+	gap: 1rem;
 	overflow-x: auto;
 	scroll-snap-type: x mandatory;
 	-webkit-overflow-scrolling: touch;
@@ -333,6 +452,27 @@
 	}
 }
 
+/* Gradient fade hint on right edge */
+.va-scroll-row::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	width: 3rem;
+	background: linear-gradient(to left, var(--wp--preset--color--white), transparent);
+	pointer-events: none;
+	z-index: 2;
+}
+
+.va-section--light .va-scroll-row::after {
+	background: linear-gradient(to left, var(--wp--preset--color--light), transparent);
+}
+
+.va-section--dark .va-scroll-row::after {
+	background: linear-gradient(to left, var(--wp--preset--color--dark), transparent);
+}
+
 /* Section Header
    ========================================================================== */
 
@@ -340,11 +480,11 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: baseline;
-	margin-bottom: 1.25rem;
+	margin-bottom: 1.5rem;
 }
 
 .va-section-header__title {
-	font-size: 1.5rem;
+	font-size: clamp(1.35rem, 3vw, 1.75rem);
 	font-weight: 700;
 	color: var(--wp--preset--color--primary);
 	margin: 0;
@@ -355,10 +495,166 @@
 	font-weight: 500;
 	color: var(--wp--preset--color--teal);
 	text-decoration: none;
+	white-space: nowrap;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.25rem;
+}
+
+.va-section-header__link::after {
+	content: "→";
+	display: inline-block;
+	transition: transform 0.2s ease;
 }
 
 .va-section-header__link:hover {
-	text-decoration: underline;
+	text-decoration: none;
+	color: var(--wp--preset--color--primary);
+}
+
+.va-section-header__link:hover::after {
+	transform: translateX(3px);
+}
+
+/* Pills & Filters
+   ========================================================================== */
+
+.va-pill-row {
+	display: flex;
+	gap: 0.5rem;
+	overflow-x: auto;
+	scroll-snap-type: x mandatory;
+	-webkit-overflow-scrolling: touch;
+	scrollbar-width: none;
+	margin-bottom: var(--wp--preset--spacing--60);
+	padding-bottom: 0.25rem;
+}
+
+.va-pill-row::-webkit-scrollbar {
+	display: none;
+}
+
+.va-pill {
+	display: inline-block;
+	flex-shrink: 0;
+	padding: 0.5rem 1rem;
+	font-size: 0.85rem;
+	font-weight: 500;
+	color: #555;
+	background: var(--wp--preset--color--white);
+	border: 1px solid var(--wp--preset--color--grey-200);
+	border-radius: 20px;
+	text-decoration: none;
+	white-space: nowrap;
+	scroll-snap-align: start;
+	transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+	cursor: pointer;
+}
+
+.va-pill:hover {
+	border-color: var(--wp--preset--color--teal);
+	color: var(--wp--preset--color--teal);
+	text-decoration: none;
+}
+
+.va-pill.is-active,
+.va-pill--active {
+	background: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--white);
+	border-color: transparent;
+}
+
+.va-pill.is-active:hover,
+.va-pill--active:hover {
+	color: var(--wp--preset--color--white);
+}
+
+/* Newsletter
+   ========================================================================== */
+
+.va-newsletter {
+	text-align: center;
+	max-width: 560px;
+	margin-inline: auto;
+}
+
+.va-newsletter h2 {
+	font-size: 1.5rem;
+	color: var(--wp--preset--color--white);
+	margin-bottom: var(--wp--preset--spacing--30);
+}
+
+.va-newsletter p {
+	color: rgba(255, 255, 255, 0.7);
+	font-size: 1rem;
+	max-width: 500px;
+	margin-inline: auto;
+}
+
+.va-newsletter__form {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+	margin-top: var(--wp--preset--spacing--50);
+}
+
+@media (min-width: 640px) {
+	.va-newsletter__form {
+		flex-direction: row;
+		gap: 0;
+	}
+}
+
+.va-newsletter__input {
+	flex: 1;
+	padding: 0.85rem 1.25rem;
+	font-size: 1rem;
+	color: var(--wp--preset--color--white);
+	background: rgba(255, 255, 255, 0.1);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	border-radius: var(--va-radius-md);
+	outline: none;
+	transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+@media (min-width: 640px) {
+	.va-newsletter__input {
+		border-radius: var(--va-radius-md) 0 0 var(--va-radius-md);
+		border-right: 0;
+	}
+}
+
+.va-newsletter__input::placeholder {
+	color: rgba(255, 255, 255, 0.4);
+}
+
+.va-newsletter__input:focus {
+	border-color: rgba(255, 255, 255, 0.4);
+	background: rgba(255, 255, 255, 0.15);
+}
+
+.va-newsletter__btn {
+	padding: 0.85rem 2rem;
+	font-size: 1rem;
+	font-weight: 600;
+	color: var(--wp--preset--color--white);
+	background: var(--wp--preset--color--accent);
+	border: none;
+	border-radius: var(--va-radius-md);
+	cursor: pointer;
+	transition: background 0.2s ease;
+	white-space: nowrap;
+	min-height: 44px;
+}
+
+@media (min-width: 640px) {
+	.va-newsletter__btn {
+		border-radius: 0 var(--va-radius-md) var(--va-radius-md) 0;
+	}
+}
+
+.va-newsletter__btn:hover {
+	background: var(--wp--preset--color--primary);
 }
 
 /* Single Walk
@@ -394,8 +690,8 @@
 	font-size: 0.85rem;
 	font-weight: 500;
 	color: var(--wp--preset--color--grey-600);
-	background: var(--wp--preset--color--light);
-	border-radius: 4px;
+	background: #f5f5f5;
+	border-radius: 20px;
 }
 
 .va-single-walk__description {
@@ -413,14 +709,63 @@
 	color: var(--wp--preset--color--grey-600);
 }
 
-.va-single-walk__terrain {
+/* Info cards — terrain, parking, seasonal notes grid */
+
+.va-info-cards {
+	display: grid;
+	gap: 1rem;
 	margin-bottom: 2rem;
 }
 
-.va-single-walk__terrain-list {
+@media (min-width: 640px) {
+	.va-info-cards {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (min-width: 1024px) {
+	.va-info-cards {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+.va-info-card {
+	background: var(--wp--preset--color--light);
+	border-radius: var(--va-radius-lg);
+	padding: 1.25rem;
+	border: 1px solid var(--wp--preset--color--grey-200);
+}
+
+.va-info-card__title {
+	font-size: 0.85rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+	color: var(--wp--preset--color--primary);
+	margin: 0 0 0.75rem;
+}
+
+.va-info-card__tags {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 0.5rem;
+	gap: 0.4rem;
+}
+
+.va-info-card__tag {
+	display: inline-block;
+	padding: 0.2rem 0.6rem;
+	font-size: 0.8rem;
+	font-weight: 500;
+	color: var(--wp--preset--color--grey-600);
+	background: var(--wp--preset--color--white);
+	border-radius: var(--va-radius-sm);
+}
+
+.va-info-card__text {
+	margin: 0;
+	font-size: 0.9rem;
+	line-height: 1.5;
+	color: var(--wp--preset--color--grey-600);
 }
 
 .va-single-walk__on-route {
@@ -435,6 +780,11 @@
 
 .va-single-walk__on-route li {
 	padding: 0.5rem 0;
+	border-bottom: 1px solid var(--wp--preset--color--grey-200);
+}
+
+.va-single-walk__on-route li:last-child {
+	border-bottom: 0;
 }
 
 .va-single-walk__on-route a {
@@ -444,11 +794,7 @@
 
 .va-single-walk__on-route a:hover {
 	text-decoration: underline;
-}
-
-.va-single-walk__parking,
-.va-single-walk__seasonal {
-	margin-bottom: 2rem;
+	text-underline-offset: 3px;
 }
 
 .va-single-walk__highlights {
@@ -530,6 +876,7 @@
 
 .va-single-event__venue a:hover {
 	text-decoration: underline;
+	text-underline-offset: 3px;
 }
 
 .va-single-event__description {
@@ -546,18 +893,23 @@
 }
 
 .va-single-event__btn {
-	display: inline-block;
-	padding: 0.65rem 1.5rem;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0.75rem 1.5rem;
 	background: var(--wp--preset--color--accent);
 	color: var(--wp--preset--color--white);
-	border-radius: 6px;
+	border-radius: var(--va-radius-md);
 	font-weight: 600;
 	text-decoration: none;
 	transition: background 0.2s ease;
+	min-height: 44px;
 }
 
 .va-single-event__btn:hover {
 	background: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--white);
+	text-decoration: none;
 }
 
 .va-single-event__location {
@@ -612,8 +964,8 @@
 	font-size: 0.85rem;
 	font-weight: 500;
 	color: var(--wp--preset--color--grey-600);
-	background: var(--wp--preset--color--light);
-	border-radius: 4px;
+	background: #f5f5f5;
+	border-radius: 20px;
 }
 
 .va-single-area__intro,
@@ -658,6 +1010,7 @@
 
 .va-single-area__attraction a:hover {
 	text-decoration: underline;
+	text-underline-offset: 3px;
 }
 
 .va-single-area__refreshments {
@@ -672,6 +1025,11 @@
 
 .va-single-area__refreshments li {
 	padding: 0.5rem 0;
+	border-bottom: 1px solid var(--wp--preset--color--grey-200);
+}
+
+.va-single-area__refreshments li:last-child {
+	border-bottom: 0;
 }
 
 .va-single-area__refreshments a {
@@ -681,13 +1039,14 @@
 
 .va-single-area__refreshments a:hover {
 	text-decoration: underline;
+	text-underline-offset: 3px;
 }
 
 .va-single-area__fun-fact {
 	margin-bottom: 2rem;
 	padding: 1.25rem;
 	background: var(--wp--preset--color--light);
-	border-radius: 8px;
+	border-radius: var(--va-radius-lg);
 	border-left: 4px solid var(--wp--preset--color--teal);
 }
 
@@ -705,13 +1064,109 @@
 	margin-bottom: 2rem;
 }
 
+/* Guide card variant
+   ========================================================================== */
+
+.va-card--guide .va-card__body {
+	padding: 1.25rem;
+}
+
+.va-card__updated {
+	font-size: 0.75rem;
+	color: #888;
+	margin-top: 0.35rem;
+}
+
+/* Single Guide
+   ========================================================================== */
+
+.va-single-guide__hero {
+	width: 100%;
+	max-height: 500px;
+	overflow: hidden;
+}
+
+.va-single-guide__hero-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.va-single-guide__header {
+	margin-bottom: 1.5rem;
+}
+
+.va-single-guide__title {
+	color: var(--wp--preset--color--primary);
+	margin: 0 0 0.5rem;
+}
+
+.va-single-guide__meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	align-items: center;
+	margin-bottom: 1.5rem;
+}
+
+.va-single-guide__content {
+	margin-bottom: 2rem;
+	line-height: 1.7;
+}
+
+.va-single-guide__content h2 {
+	margin-top: 2rem;
+	margin-bottom: 0.75rem;
+}
+
+.va-single-guide__content h3 {
+	margin-top: 1.5rem;
+	margin-bottom: 0.5rem;
+}
+
+.va-single-guide__content p {
+	margin-bottom: 1rem;
+}
+
+.va-single-guide__cta {
+	margin-bottom: 2rem;
+	padding: 2rem;
+	background: var(--wp--preset--color--light);
+	border-radius: var(--va-radius-lg);
+	text-align: center;
+}
+
+.va-single-guide__cta-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0.75rem 1.5rem;
+	background: var(--wp--preset--color--accent);
+	color: var(--wp--preset--color--white);
+	border-radius: var(--va-radius-md);
+	font-weight: 600;
+	text-decoration: none;
+	transition: background 0.2s ease;
+	min-height: 44px;
+}
+
+.va-single-guide__cta-btn:hover {
+	background: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--white);
+	text-decoration: none;
+}
+
+.va-single-guide__related {
+	margin-bottom: 2rem;
+}
+
 /* Map — unified Leaflet container
    ========================================================================== */
 
 .va-map {
 	width: 100%;
 	height: 300px;
-	border-radius: 8px;
+	border-radius: var(--va-radius-lg);
 	overflow: hidden;
 	margin-bottom: 1rem;
 }
@@ -727,7 +1182,7 @@
 
 .va-elevation-profile .elevation {
 	width: 100%;
-	border-radius: 8px;
+	border-radius: var(--va-radius-md);
 	overflow: hidden;
 }
 

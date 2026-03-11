@@ -1,14 +1,22 @@
-<!-- wp:group {"tagName":"header","style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40","left":"var:preset|spacing|40","right":"var:preset|spacing|40"}}},"backgroundColor":"primary","layout":{"type":"constrained","contentSize":"1200px"}} -->
-<header class="wp-block-group has-primary-background-color has-background" style="padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)">
+<!-- wp:group {"tagName":"header","className":"va-site-header","layout":{"type":"default"}} -->
+<header class="wp-block-group va-site-header">
 
-	<!-- wp:group {"layout":{"type":"flex","justifyContent":"space-between","flexWrap":"wrap"}} -->
-	<div class="wp-block-group">
+	<!-- wp:group {"className":"va-site-header__inner","layout":{"type":"default"}} -->
+	<div class="wp-block-group va-site-header__inner">
 
-		<!-- wp:paragraph {"style":{"typography":{"fontWeight":"700","fontSize":"1.25rem"},"elements":{"link":{"color":{"text":"var:preset|color|white"}}}},"textColor":"white"} -->
-		<p class="has-white-color has-text-color has-link-color" style="font-size:1.25rem;font-weight:700"><a href="/">aylesbury.town</a></p>
+		<!-- wp:paragraph {"className":"va-site-header__logo"} -->
+		<p class="va-site-header__logo"><a href="/">visitaylesbury</a></p>
 		<!-- /wp:paragraph -->
 
-		<!-- wp:navigation {"textColor":"white","overlayBackgroundColor":"primary","overlayTextColor":"white","layout":{"type":"flex","justifyContent":"right"},"style":{"typography":{"fontSize":"0.95rem"},"spacing":{"blockGap":"var:preset|spacing|50"}}} /-->
+		<!-- wp:navigation {"textColor":"primary","overlayBackgroundColor":"white","overlayTextColor":"primary","className":"va-site-header__nav","layout":{"type":"flex","justifyContent":"right"},"style":{"typography":{"fontSize":"0.95rem","fontWeight":"500"},"spacing":{"blockGap":"2rem"}}} /-->
+
+		<!-- wp:html -->
+		<button class="va-site-header__toggle" aria-label="Menu" aria-expanded="false">
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+				<path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+			</svg>
+		</button>
+		<!-- /wp:html -->
 
 	</div>
 	<!-- /wp:group -->

@@ -11,21 +11,23 @@
 get_header();
 ?>
 
-<main>
+<main class="va-main">
 
 	<!-- 1. Hero -->
 	<section class="va-hero">
-		<h1><?php esc_html_e( 'Discover Aylesbury and the Vale', 'visitaylesbury' ); ?></h1>
-		<p><?php esc_html_e( 'The digital front door to everything local.', 'visitaylesbury' ); ?></p>
-		<div class="va-hero__search">
-			<!-- Search form placeholder -->
-		</div>
-		<div class="va-hero__pills">
-			<a href="<?php echo esc_url( get_permalink( get_page_by_path( 'things-to-do' ) ) ); ?>" class="va-hero__pill"><?php esc_html_e( 'Things to Do', 'visitaylesbury' ); ?></a>
-			<a href="<?php echo esc_url( get_post_type_archive_link( 'event' ) ); ?>" class="va-hero__pill"><?php esc_html_e( 'Events', 'visitaylesbury' ); ?></a>
-			<a href="<?php echo esc_url( get_permalink( get_page_by_path( 'food-and-drink' ) ) ); ?>" class="va-hero__pill"><?php esc_html_e( 'Eat & Drink', 'visitaylesbury' ); ?></a>
-			<a href="<?php echo esc_url( get_permalink( get_page_by_path( 'the-vale' ) ) ); ?>" class="va-hero__pill"><?php esc_html_e( 'The Vale', 'visitaylesbury' ); ?></a>
-			<a href="<?php echo esc_url( get_post_type_archive_link( 'listing' ) ); ?>" class="va-hero__pill"><?php esc_html_e( 'Directory', 'visitaylesbury' ); ?></a>
+		<div class="va-hero__content">
+			<h1><?php esc_html_e( 'Discover Aylesbury and the Vale', 'visitaylesbury' ); ?></h1>
+			<p><?php esc_html_e( 'Your guide to everything local — places, events, food, walks, and more.', 'visitaylesbury' ); ?></p>
+			<div class="va-hero__search">
+				<input type="search" class="va-hero__input" placeholder="<?php esc_attr_e( 'Search for places, events, and more…', 'visitaylesbury' ); ?>" />
+			</div>
+			<div class="va-hero__pills">
+				<a href="<?php echo esc_url( get_permalink( get_page_by_path( 'things-to-do' ) ) ); ?>" class="va-hero__pill"><?php esc_html_e( 'Things to Do', 'visitaylesbury' ); ?></a>
+				<a href="<?php echo esc_url( get_post_type_archive_link( 'event' ) ); ?>" class="va-hero__pill"><?php esc_html_e( 'Events', 'visitaylesbury' ); ?></a>
+				<a href="<?php echo esc_url( get_permalink( get_page_by_path( 'food-and-drink' ) ) ); ?>" class="va-hero__pill"><?php esc_html_e( 'Eat & Drink', 'visitaylesbury' ); ?></a>
+				<a href="<?php echo esc_url( get_permalink( get_page_by_path( 'the-vale' ) ) ); ?>" class="va-hero__pill"><?php esc_html_e( 'The Vale', 'visitaylesbury' ); ?></a>
+				<a href="<?php echo esc_url( get_post_type_archive_link( 'listing' ) ); ?>" class="va-hero__pill"><?php esc_html_e( 'Directory', 'visitaylesbury' ); ?></a>
+			</div>
 		</div>
 	</section>
 
@@ -35,7 +37,7 @@ get_header();
 			<div class="va-section-header">
 				<h2 class="va-section-header__title"><?php esc_html_e( "What's On This Week", 'visitaylesbury' ); ?></h2>
 				<a href="<?php echo esc_url( get_post_type_archive_link( 'event' ) ); ?>" class="va-section-header__link">
-					<?php esc_html_e( 'All events', 'visitaylesbury' ); ?> &rarr;
+					<?php esc_html_e( 'All events', 'visitaylesbury' ); ?>
 				</a>
 			</div>
 
@@ -76,7 +78,7 @@ get_header();
 			<div class="va-section-header">
 				<h2 class="va-section-header__title"><?php esc_html_e( 'Featured Food and Drink', 'visitaylesbury' ); ?></h2>
 				<a href="<?php echo esc_url( get_permalink( get_page_by_path( 'food-and-drink' ) ) ); ?>" class="va-section-header__link">
-					<?php esc_html_e( 'All food & drink', 'visitaylesbury' ); ?> &rarr;
+					<?php esc_html_e( 'All food & drink', 'visitaylesbury' ); ?>
 				</a>
 			</div>
 
@@ -111,7 +113,7 @@ get_header();
 			<div class="va-section-header">
 				<h2 class="va-section-header__title"><?php esc_html_e( 'Explore the Vale', 'visitaylesbury' ); ?></h2>
 				<a href="<?php echo esc_url( get_permalink( get_page_by_path( 'the-vale' ) ) ); ?>" class="va-section-header__link">
-					<?php esc_html_e( 'All villages', 'visitaylesbury' ); ?> &rarr;
+					<?php esc_html_e( 'All villages', 'visitaylesbury' ); ?>
 				</a>
 			</div>
 
@@ -173,7 +175,7 @@ get_header();
 			<div class="va-section-header">
 				<h2 class="va-section-header__title"><?php esc_html_e( 'Walks and Countryside', 'visitaylesbury' ); ?></h2>
 				<a href="<?php echo esc_url( get_permalink( get_page_by_path( 'the-vale/walks' ) ) ); ?>" class="va-section-header__link">
-					<?php esc_html_e( 'All walks', 'visitaylesbury' ); ?> &rarr;
+					<?php esc_html_e( 'All walks', 'visitaylesbury' ); ?>
 				</a>
 			</div>
 
@@ -203,7 +205,7 @@ get_header();
 			<div class="va-section-header">
 				<h2 class="va-section-header__title"><?php esc_html_e( 'Useful Guides', 'visitaylesbury' ); ?></h2>
 				<a href="<?php echo esc_url( get_post_type_archive_link( 'guide' ) ); ?>" class="va-section-header__link">
-					<?php esc_html_e( 'All guides', 'visitaylesbury' ); ?> &rarr;
+					<?php esc_html_e( 'All guides', 'visitaylesbury' ); ?>
 				</a>
 			</div>
 
@@ -232,7 +234,7 @@ get_header();
 			<div class="va-section-header">
 				<h2 class="va-section-header__title"><?php esc_html_e( 'Featured Businesses', 'visitaylesbury' ); ?></h2>
 				<a href="<?php echo esc_url( get_post_type_archive_link( 'listing' ) ); ?>" class="va-section-header__link">
-					<?php esc_html_e( 'Browse directory', 'visitaylesbury' ); ?> &rarr;
+					<?php esc_html_e( 'Browse directory', 'visitaylesbury' ); ?>
 				</a>
 			</div>
 
@@ -276,11 +278,12 @@ get_header();
 	<section class="va-section va-section--dark">
 		<div class="va-container">
 			<div class="va-newsletter">
-				<h2><?php esc_html_e( 'Get the best of Aylesbury in your inbox', 'visitaylesbury' ); ?></h2>
-				<p><?php esc_html_e( 'Weekly events, local picks, and exclusive offers.', 'visitaylesbury' ); ?></p>
-				<div class="va-newsletter__form">
-					<!-- Gravity Form placeholder -->
-				</div>
+				<h2><?php esc_html_e( 'Stay in the loop', 'visitaylesbury' ); ?></h2>
+				<p><?php esc_html_e( 'The best of Aylesbury, delivered weekly. Events, local picks, and exclusive offers.', 'visitaylesbury' ); ?></p>
+				<form class="va-newsletter__form">
+					<input type="email" class="va-newsletter__input" placeholder="<?php esc_attr_e( 'Your email address', 'visitaylesbury' ); ?>" required />
+					<button type="submit" class="va-newsletter__btn"><?php esc_html_e( 'Subscribe', 'visitaylesbury' ); ?></button>
+				</form>
 			</div>
 		</div>
 	</section>

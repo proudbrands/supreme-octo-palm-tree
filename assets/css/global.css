@@ -1,6 +1,5 @@
 /* ==========================================================================
-   Global — resets, base styles, utilities
-   No component styles in this file.
+   Global — reset, base styles, layout, utilities
    ========================================================================== */
 
 /* Reset
@@ -32,6 +31,11 @@ html {
 	-moz-text-size-adjust: none;
 	-webkit-text-size-adjust: none;
 	text-size-adjust: none;
+	scroll-behavior: smooth;
+}
+
+html:focus-within {
+	scroll-behavior: smooth;
 }
 
 img,
@@ -55,6 +59,28 @@ table {
 	border-collapse: collapse;
 }
 
+a {
+	text-decoration-skip-ink: auto;
+}
+
+/* Custom Properties
+   ========================================================================== */
+
+:root {
+	--va-transition-fast: 0.15s ease;
+	--va-transition-base: 0.2s ease;
+	--va-transition-slow: 0.3s ease;
+	--va-content-max: 1200px;
+	--va-text-max: 720px;
+	--va-shadow-sm: var(--wp--custom--shadow--sm);
+	--va-shadow-md: var(--wp--custom--shadow--md);
+	--va-shadow-lg: var(--wp--custom--shadow--lg);
+	--va-radius-sm: var(--wp--custom--radius--sm);
+	--va-radius-md: var(--wp--custom--radius--md);
+	--va-radius-lg: var(--wp--custom--radius--lg);
+	--va-radius-full: var(--wp--custom--radius--full);
+}
+
 /* Base
    ========================================================================== */
 
@@ -62,8 +88,8 @@ body {
 	font-family: var(--wp--preset--font-family--body, "Inter", system-ui, sans-serif);
 	font-size: 1rem;
 	font-weight: 400;
-	line-height: 1.6;
-	color: var(--wp--preset--color--primary);
+	line-height: 1.65;
+	color: #1a1a2e;
 	background-color: var(--wp--preset--color--white);
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -75,20 +101,22 @@ body {
 h1, h2, h3, h4, h5, h6 {
 	font-family: var(--wp--preset--font-family--body, "Inter", system-ui, sans-serif);
 	line-height: 1.2;
+	color: var(--wp--preset--color--primary);
+	letter-spacing: -0.01em;
 }
 
 h1 {
-	font-size: 2.25rem;
+	font-size: clamp(1.75rem, 4vw, 2.5rem);
 	font-weight: 700;
 }
 
 h2 {
-	font-size: 1.75rem;
+	font-size: clamp(1.35rem, 3vw, 1.75rem);
 	font-weight: 700;
 }
 
 h3 {
-	font-size: 1.35rem;
+	font-size: clamp(1.1rem, 2.5vw, 1.35rem);
 	font-weight: 600;
 }
 
@@ -107,6 +135,10 @@ h6 {
 	font-weight: 600;
 }
 
+p {
+	max-width: var(--va-text-max);
+}
+
 p + p {
 	margin-top: var(--wp--preset--spacing--40);
 }
@@ -116,15 +148,64 @@ p + p {
 
 a {
 	color: var(--wp--preset--color--teal);
-	text-decoration: underline;
-	text-decoration-thickness: 1px;
-	text-underline-offset: 0.15em;
-	transition: color 0.2s ease;
+	text-decoration: none;
+	transition: color var(--va-transition-base);
 }
 
 a:hover,
 a:focus-visible {
 	color: var(--wp--preset--color--primary);
+	text-decoration: underline;
+	text-decoration-thickness: 1px;
+	text-underline-offset: 3px;
+}
+
+/* Buttons
+   ========================================================================== */
+
+.va-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	padding: 0.75rem 1.5rem;
+	font-size: 0.95rem;
+	font-weight: 600;
+	line-height: 1;
+	color: var(--wp--preset--color--white);
+	background: var(--wp--preset--color--accent);
+	border: 2px solid transparent;
+	border-radius: var(--va-radius-md);
+	text-decoration: none;
+	cursor: pointer;
+	transition: background var(--va-transition-base), color var(--va-transition-base), box-shadow var(--va-transition-base);
+	min-height: 44px;
+}
+
+.va-btn:hover,
+.va-btn:focus-visible {
+	background: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--white);
+	text-decoration: none;
+}
+
+.va-btn--secondary {
+	background: transparent;
+	color: var(--wp--preset--color--primary);
+	border-color: var(--wp--preset--color--grey-200);
+}
+
+.va-btn--secondary:hover,
+.va-btn--secondary:focus-visible {
+	background: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--white);
+	border-color: var(--wp--preset--color--primary);
+}
+
+.va-btn--small {
+	padding: 0.5rem 1rem;
+	font-size: 0.85rem;
+	min-height: 36px;
 }
 
 /* Layout
@@ -132,13 +213,25 @@ a:focus-visible {
 
 .va-container {
 	width: 100%;
-	max-width: 1200px;
+	max-width: var(--va-content-max);
 	margin-inline: auto;
-	padding-inline: var(--wp--preset--spacing--40);
+	padding-inline: 1.5rem;
+}
+
+@media (min-width: 768px) {
+	.va-container {
+		padding-inline: 2rem;
+	}
 }
 
 .va-section {
-	padding-block: var(--wp--preset--spacing--70);
+	padding-block: 2.5rem;
+}
+
+@media (min-width: 768px) {
+	.va-section {
+		padding-block: 4rem;
+	}
 }
 
 /* Utilities
@@ -164,33 +257,45 @@ a:focus-visible {
 	font-size: 0.85rem;
 }
 
+/* Focus styles
+   ========================================================================== */
+
+:focus-visible {
+	outline: 2px solid var(--wp--preset--color--teal);
+	outline-offset: 2px;
+}
+
 /* Hero
    ========================================================================== */
 
 .va-hero {
 	position: relative;
-	padding: var(--wp--preset--spacing--80) var(--wp--preset--spacing--40);
+	padding: 3rem 1.5rem;
 	background-color: var(--wp--preset--color--primary);
 	color: var(--wp--preset--color--white);
 	text-align: center;
 }
 
+@media (min-width: 768px) {
+	.va-hero {
+		padding: 5rem 2rem;
+	}
+}
+
 .va-hero h1 {
-	font-size: clamp(1.75rem, 4vw, 2.75rem);
+	font-size: clamp(2rem, 5vw, 3.5rem);
 	font-weight: 700;
+	color: var(--wp--preset--color--white);
+	letter-spacing: -0.02em;
 	margin-bottom: var(--wp--preset--spacing--30);
 }
 
 .va-hero p {
-	font-size: 1.15rem;
-	opacity: 0.85;
-	max-width: 560px;
+	font-size: clamp(1rem, 2vw, 1.25rem);
+	color: rgba(255, 255, 255, 0.85);
+	max-width: 600px;
 	margin-inline: auto;
-}
-
-.va-hero__search {
-	max-width: 520px;
-	margin: var(--wp--preset--spacing--50) auto 0;
+	opacity: 1;
 }
 
 .va-hero__pills {
@@ -203,19 +308,20 @@ a:focus-visible {
 
 .va-hero__pill {
 	display: inline-block;
-	padding: 0.45rem 1rem;
+	padding: 0.5rem 1.25rem;
 	font-size: 0.85rem;
 	font-weight: 500;
 	color: var(--wp--preset--color--white);
 	background: rgba(255, 255, 255, 0.15);
-	border-radius: 9999px;
+	border-radius: 20px;
 	text-decoration: none;
-	transition: background 0.2s ease;
+	transition: background var(--va-transition-base);
 }
 
 .va-hero__pill:hover {
 	background: rgba(255, 255, 255, 0.25);
 	color: var(--wp--preset--color--white);
+	text-decoration: none;
 }
 
 /* Section Variants
@@ -255,7 +361,7 @@ a:focus-visible {
 	margin-top: var(--wp--preset--spacing--50);
 }
 
-/* Quick-action pills row (used on Things to Do, etc.)
+/* Quick-action pills row
    ========================================================================== */
 
 .va-pill-row {
@@ -272,14 +378,15 @@ a:focus-visible {
 	font-weight: 500;
 	color: var(--wp--preset--color--primary);
 	background: var(--wp--preset--color--light);
-	border-radius: 9999px;
+	border-radius: var(--va-radius-full);
 	text-decoration: none;
-	transition: background 0.2s ease, color 0.2s ease;
+	transition: background var(--va-transition-base), color var(--va-transition-base);
 }
 
 .va-pill:hover {
 	background: var(--wp--preset--color--primary);
 	color: var(--wp--preset--color--white);
+	text-decoration: none;
 }
 
 /* Guide card variant
@@ -287,14 +394,14 @@ a:focus-visible {
 
 .va-card--guide {
 	background: var(--wp--preset--color--white);
-	border-radius: 8px;
+	border-radius: var(--va-radius-lg);
 	overflow: hidden;
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-	transition: box-shadow 0.2s ease, transform 0.2s ease;
+	box-shadow: var(--va-shadow-sm);
+	transition: box-shadow var(--va-transition-base), transform var(--va-transition-base);
 }
 
 .va-card--guide:hover {
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+	box-shadow: var(--va-shadow-md);
 	transform: translateY(-2px);
 }
 
@@ -359,26 +466,730 @@ a:focus-visible {
 	margin-bottom: 2rem;
 	padding: 1.5rem;
 	background: var(--wp--preset--color--light);
-	border-radius: 8px;
+	border-radius: var(--va-radius-lg);
 	text-align: center;
 }
 
 .va-single-guide__cta-btn {
 	display: inline-block;
-	padding: 0.65rem 1.5rem;
+	padding: 0.75rem 1.5rem;
 	background: var(--wp--preset--color--accent);
 	color: var(--wp--preset--color--white);
-	border-radius: 6px;
+	border-radius: var(--va-radius-md);
 	font-weight: 600;
 	text-decoration: none;
-	transition: background 0.2s ease;
+	transition: background var(--va-transition-base);
 }
 
 .va-single-guide__cta-btn:hover {
 	background: var(--wp--preset--color--primary);
 	color: var(--wp--preset--color--white);
+	text-decoration: none;
 }
 
 .va-single-guide__related {
 	margin-bottom: 2rem;
+}
+
+/* Site Header
+   ========================================================================== */
+
+.va-site-header {
+	position: sticky;
+	top: 0;
+	z-index: 100;
+	background: var(--wp--preset--color--white);
+	box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+}
+
+.va-site-header__inner {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	max-width: var(--va-content-max);
+	margin-inline: auto;
+	padding: 0.875rem 1.5rem;
+}
+
+@media (min-width: 768px) {
+	.va-site-header__inner {
+		padding: 0.875rem 2rem;
+	}
+}
+
+.va-site-header__logo {
+	font-size: 1.25rem;
+	font-weight: 700;
+	color: var(--wp--preset--color--primary);
+	text-decoration: none;
+	letter-spacing: -0.01em;
+}
+
+.va-site-header__logo:hover {
+	color: var(--wp--preset--color--primary);
+	text-decoration: none;
+}
+
+.va-site-header__nav {
+	display: none;
+	align-items: center;
+	gap: 2rem;
+}
+
+@media (min-width: 768px) {
+	.va-site-header__nav {
+		display: flex;
+	}
+}
+
+.va-site-header__nav a {
+	font-size: 0.95rem;
+	font-weight: 500;
+	color: #1a1a2e;
+	text-decoration: none;
+	transition: color var(--va-transition-fast);
+}
+
+.va-site-header__nav a:hover {
+	color: var(--wp--preset--color--teal);
+	text-decoration: none;
+}
+
+.va-site-header__cta {
+	display: none;
+}
+
+@media (min-width: 768px) {
+	.va-site-header__cta {
+		display: inline-flex;
+	}
+}
+
+/* Mobile menu toggle */
+.va-site-header__toggle {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	padding: 0;
+	background: none;
+	border: none;
+	cursor: pointer;
+	color: var(--wp--preset--color--primary);
+}
+
+@media (min-width: 768px) {
+	.va-site-header__toggle {
+		display: none;
+	}
+}
+
+.va-site-header__toggle svg {
+	width: 24px;
+	height: 24px;
+}
+
+/* Mobile menu */
+.va-mobile-menu {
+	display: none;
+	background: var(--wp--preset--color--white);
+	border-top: 1px solid var(--wp--preset--color--grey-200);
+	padding: 1rem 1.5rem 1.5rem;
+}
+
+.va-mobile-menu.is-open {
+	display: block;
+}
+
+.va-mobile-menu a {
+	display: block;
+	padding: 0.75rem 0;
+	font-size: 1rem;
+	font-weight: 500;
+	color: #1a1a2e;
+	text-decoration: none;
+	border-bottom: 1px solid var(--wp--preset--color--grey-200);
+	min-height: 44px;
+}
+
+.va-mobile-menu a:last-child {
+	border-bottom: 0;
+}
+
+.va-mobile-menu a:hover {
+	color: var(--wp--preset--color--teal);
+	text-decoration: none;
+}
+
+/* Site Footer
+   ========================================================================== */
+
+.va-site-footer {
+	background: var(--wp--preset--color--dark);
+	color: rgba(255, 255, 255, 0.6);
+}
+
+.va-site-footer__inner {
+	max-width: var(--va-content-max);
+	margin-inline: auto;
+	padding: 4rem 1.5rem 2rem;
+}
+
+@media (min-width: 768px) {
+	.va-site-footer__inner {
+		padding: 4rem 2rem 2rem;
+	}
+}
+
+.va-site-footer__grid {
+	display: grid;
+	gap: 2rem;
+}
+
+@media (min-width: 768px) {
+	.va-site-footer__grid {
+		grid-template-columns: 1.5fr 1fr 1fr;
+		gap: 3rem;
+	}
+}
+
+.va-site-footer__brand-name {
+	font-size: 1.25rem;
+	font-weight: 700;
+	color: var(--wp--preset--color--white);
+	margin: 0 0 0.5rem;
+}
+
+.va-site-footer__brand-tagline {
+	font-size: 0.9rem;
+	color: rgba(255, 255, 255, 0.6);
+	margin: 0;
+	max-width: none;
+}
+
+.va-site-footer__heading {
+	font-size: 0.85rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	color: var(--wp--preset--color--white);
+	margin: 0 0 1rem;
+}
+
+.va-site-footer__links {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.va-site-footer__links li {
+	margin-bottom: 0.5rem;
+}
+
+.va-site-footer__links a {
+	font-size: 0.9rem;
+	color: rgba(255, 255, 255, 0.6);
+	text-decoration: none;
+	transition: color var(--va-transition-fast);
+}
+
+.va-site-footer__links a:hover {
+	color: var(--wp--preset--color--white);
+	text-decoration: none;
+}
+
+.va-site-footer__bottom {
+	margin-top: 3rem;
+	padding-top: 1.5rem;
+	border-top: 1px solid rgba(255, 255, 255, 0.1);
+	text-align: center;
+}
+
+.va-site-footer__copyright {
+	font-size: 0.8rem;
+	color: rgba(255, 255, 255, 0.4);
+	margin: 0;
+	max-width: none;
+}
+
+/* WP Block Overrides — tame FSE header/footer defaults
+   ========================================================================== */
+
+header.wp-block-group,
+footer.wp-block-group {
+	padding: 0;
+}
+
+header.wp-block-group > .wp-block-group {
+	padding: 0;
+}
+
+/* ==========================================================================
+   Page-level styles — hero, single layouts, archive, animations
+   ========================================================================== */
+
+/* Hero — full viewport
+   ========================================================================== */
+
+.va-hero {
+	min-height: calc(100vh - 60px);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: linear-gradient(
+		135deg,
+		rgba(15, 27, 45, 0.85) 0%,
+		rgba(29, 53, 87, 0.6) 100%
+	);
+	/* When a hero image is added, set it as background-image on the element */
+	background-size: cover;
+	background-position: center;
+}
+
+.va-hero__content {
+	max-width: 700px;
+	margin-inline: auto;
+}
+
+.va-hero__input {
+	width: 100%;
+	padding: 1rem 1.5rem;
+	font-size: 1rem;
+	color: #1a1a2e;
+	background: var(--wp--preset--color--white);
+	border: none;
+	border-radius: 50px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+	outline: none;
+	transition: box-shadow var(--va-transition-base);
+}
+
+.va-hero__input::placeholder {
+	color: #999;
+}
+
+.va-hero__input:focus {
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15), 0 0 0 3px rgba(42, 157, 143, 0.3);
+}
+
+.va-hero__search {
+	max-width: 560px;
+	margin: var(--wp--preset--spacing--50) auto 0;
+	padding-inline: 1rem;
+}
+
+.va-hero__pills {
+	margin-top: var(--wp--preset--spacing--50);
+	padding-inline: 1rem;
+}
+
+.va-hero__pill {
+	padding: 0.5rem 1.25rem;
+	border-radius: 20px;
+}
+
+/* Main content fade-in
+   ========================================================================== */
+
+.va-main {
+	animation: va-fade-in 0.4s ease both;
+}
+
+@keyframes va-fade-in {
+	from {
+		opacity: 0;
+		transform: translateY(8px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* Card fade-in via intersection observer (JS adds .is-visible)
+   ========================================================================== */
+
+.va-card[data-animate] {
+	opacity: 0;
+	transform: translateY(20px);
+	transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.va-card[data-animate].is-visible {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+/* Filter Bar — archive pages
+   ========================================================================== */
+
+.va-filter-bar {
+	background: var(--wp--preset--color--white);
+	box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+	padding-block: 1rem;
+	position: sticky;
+	top: 60px;
+	z-index: 50;
+}
+
+.va-filter-bar__inner {
+	max-width: var(--va-content-max);
+	margin-inline: auto;
+	padding-inline: 1.5rem;
+}
+
+@media (min-width: 768px) {
+	.va-filter-bar__inner {
+		padding-inline: 2rem;
+	}
+}
+
+/* Archive page header */
+.va-archive-header {
+	padding: 2.5rem 0 1.5rem;
+}
+
+@media (min-width: 768px) {
+	.va-archive-header {
+		padding: 3rem 0 2rem;
+	}
+}
+
+.va-archive-header h1 {
+	margin: 0;
+}
+
+/* Page hero — light background (walks browse, etc.)
+   ========================================================================== */
+
+.va-page-hero {
+	background: var(--wp--preset--color--light);
+	padding: 2.5rem 0;
+	text-align: center;
+}
+
+@media (min-width: 768px) {
+	.va-page-hero {
+		padding: 4rem 0;
+	}
+}
+
+.va-page-hero h1 {
+	margin: 0 0 0.5rem;
+}
+
+.va-page-hero p {
+	color: var(--wp--preset--color--grey-600);
+	max-width: 600px;
+	margin-inline: auto;
+}
+
+/* Category divider — food-and-drink sections
+   ========================================================================== */
+
+.va-category-divider {
+	border-top: 1px solid var(--wp--preset--color--grey-200);
+	padding-top: 3rem;
+	margin-top: 1rem;
+}
+
+/* Two-column layout — single listing, single event
+   ========================================================================== */
+
+.va-layout-sidebar {
+	display: grid;
+	gap: 2rem;
+}
+
+@media (min-width: 768px) {
+	.va-layout-sidebar {
+		grid-template-columns: 1fr 380px;
+		gap: 3rem;
+	}
+}
+
+.va-layout-sidebar__main {
+	min-width: 0;
+}
+
+.va-layout-sidebar__aside {
+	min-width: 0;
+}
+
+@media (min-width: 768px) {
+	.va-layout-sidebar__aside {
+		position: sticky;
+		top: calc(60px + 1.5rem);
+		align-self: start;
+	}
+}
+
+/* Sidebar card
+   ========================================================================== */
+
+.va-sidebar-card {
+	background: var(--wp--preset--color--white);
+	border-radius: var(--va-radius-lg);
+	padding: 1.5rem;
+	box-shadow:
+		0 1px 3px rgba(0, 0, 0, 0.06),
+		0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.va-sidebar-card h3 {
+	font-size: 0.85rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+	color: var(--wp--preset--color--primary);
+	margin: 0 0 1rem;
+}
+
+.va-sidebar-card__row {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.75rem;
+	padding: 0.6rem 0;
+	border-bottom: 1px solid var(--wp--preset--color--grey-200);
+	font-size: 0.9rem;
+	color: #1a1a2e;
+}
+
+.va-sidebar-card__row:last-child {
+	border-bottom: 0;
+}
+
+.va-sidebar-card__icon {
+	flex-shrink: 0;
+	width: 20px;
+	color: var(--wp--preset--color--grey-600);
+}
+
+.va-sidebar-card__row a {
+	color: var(--wp--preset--color--teal);
+	text-decoration: none;
+}
+
+.va-sidebar-card__row a:hover {
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+/* Sidebar date block (event sidebar) */
+.va-sidebar-card__date {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 1rem;
+	background: var(--wp--preset--color--light);
+	border-radius: var(--va-radius-md);
+	text-align: center;
+	margin-bottom: 1.25rem;
+}
+
+.va-sidebar-card__date-day {
+	font-size: 2rem;
+	font-weight: 700;
+	color: var(--wp--preset--color--accent);
+	line-height: 1;
+}
+
+.va-sidebar-card__date-month {
+	font-size: 0.8rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	color: #888;
+	margin-top: 0.25rem;
+}
+
+/* Full-width CTA in sidebar */
+.va-sidebar-card .va-btn {
+	width: 100%;
+	margin-top: 1rem;
+}
+
+/* Opening hours table
+   ========================================================================== */
+
+.va-hours-table {
+	width: 100%;
+	font-size: 0.9rem;
+}
+
+.va-hours-table td {
+	padding: 0.4rem 0;
+	border-bottom: 1px solid var(--wp--preset--color--grey-200);
+}
+
+.va-hours-table tr:last-child td {
+	border-bottom: 0;
+}
+
+.va-hours-table td:first-child {
+	font-weight: 500;
+	color: var(--wp--preset--color--primary);
+}
+
+.va-hours-table td:last-child {
+	text-align: right;
+	color: var(--wp--preset--color--grey-600);
+}
+
+/* Feature pills — listing features with icons
+   ========================================================================== */
+
+.va-feature-pills {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	margin-bottom: 2rem;
+}
+
+.va-feature-pill {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	padding: 0.35rem 0.85rem;
+	font-size: 0.85rem;
+	font-weight: 500;
+	color: var(--wp--preset--color--grey-600);
+	background: #f5f5f5;
+	border-radius: 20px;
+}
+
+.va-feature-pill__icon {
+	font-size: 0.9rem;
+	line-height: 1;
+}
+
+/* Single listing
+   ========================================================================== */
+
+.va-single-listing__hero {
+	width: 100%;
+	max-height: 400px;
+	overflow: hidden;
+}
+
+.va-single-listing__hero-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.va-single-listing__header {
+	margin-bottom: 1.5rem;
+}
+
+.va-single-listing__title {
+	color: var(--wp--preset--color--primary);
+	margin: 0 0 0.5rem;
+}
+
+.va-single-listing__tagline {
+	font-size: 1.1rem;
+	color: var(--wp--preset--color--grey-600);
+	margin: 0;
+}
+
+.va-single-listing__description {
+	margin-bottom: 2rem;
+	line-height: 1.7;
+}
+
+.va-single-listing__description p {
+	margin-bottom: 1rem;
+}
+
+.va-single-listing__social-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	gap: 0.75rem;
+}
+
+.va-single-listing__social-list a {
+	color: var(--wp--preset--color--teal);
+	text-decoration: none;
+	font-weight: 500;
+}
+
+.va-single-listing__social-list a:hover {
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+/* Walk stats bar — full width
+   ========================================================================== */
+
+.va-walk-stats-bar {
+	background: var(--wp--preset--color--light);
+	padding: 1.5rem 0;
+}
+
+.va-walk-stats-bar__inner {
+	max-width: var(--va-content-max);
+	margin-inline: auto;
+	padding-inline: 1.5rem;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 2rem;
+}
+
+@media (min-width: 768px) {
+	.va-walk-stats-bar__inner {
+		padding-inline: 2rem;
+		gap: 3rem;
+	}
+}
+
+.va-walk-stat {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	gap: 0.25rem;
+}
+
+.va-walk-stat__value {
+	font-size: 1.5rem;
+	font-weight: 700;
+	color: var(--wp--preset--color--primary);
+	line-height: 1;
+}
+
+.va-walk-stat__label {
+	font-size: 0.8rem;
+	font-weight: 500;
+	color: #888;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+}
+
+/* Vale grid — larger area cards
+   ========================================================================== */
+
+.va-grid--vale {
+	grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+	.va-grid--vale {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (min-width: 1024px) {
+	.va-grid--vale {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+.va-grid--vale .va-card--area .va-card__image--wide {
+	aspect-ratio: 4 / 3;
 }

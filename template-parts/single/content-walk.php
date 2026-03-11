@@ -2,6 +2,8 @@
 /**
  * Single content: Walk
  *
+ * Full-width stats bar below hero, prominent map, single-column content.
+ *
  * @package VisitAylesbury
  */
 
@@ -41,6 +43,8 @@ $terrain_labels = array(
 	'steps'  => 'Steps',
 	'steep'  => 'Steep',
 );
+
+$difficulty_lower = strtolower( $difficulty );
 ?>
 
 <article class="va-single-walk">
@@ -51,27 +55,45 @@ $terrain_labels = array(
 		</div>
 	<?php endif; ?>
 
+	<!-- Stats bar — full width -->
+	<div class="va-walk-stats-bar">
+		<div class="va-walk-stats-bar__inner">
+			<?php if ( $distance_miles ) : ?>
+				<div class="va-walk-stat">
+					<span class="va-walk-stat__value"><?php echo esc_html( $distance_miles ); ?></span>
+					<span class="va-walk-stat__label"><?php esc_html_e( 'Miles', 'visitaylesbury' ); ?></span>
+				</div>
+			<?php endif; ?>
+			<?php if ( $estimated_time ) : ?>
+				<div class="va-walk-stat">
+					<span class="va-walk-stat__value"><?php echo esc_html( $estimated_time ); ?></span>
+					<span class="va-walk-stat__label"><?php esc_html_e( 'Duration', 'visitaylesbury' ); ?></span>
+				</div>
+			<?php endif; ?>
+			<?php if ( $difficulty ) : ?>
+				<div class="va-walk-stat">
+					<span class="va-badge va-badge--<?php echo esc_attr( $difficulty_lower ); ?>"><?php echo esc_html( $difficulty ); ?></span>
+					<span class="va-walk-stat__label"><?php esc_html_e( 'Difficulty', 'visitaylesbury' ); ?></span>
+				</div>
+			<?php endif; ?>
+			<?php if ( $dog_friendly ) : ?>
+				<div class="va-walk-stat">
+					<span class="va-walk-stat__value">🐾</span>
+					<span class="va-walk-stat__label"><?php esc_html_e( 'Dog Friendly', 'visitaylesbury' ); ?></span>
+				</div>
+			<?php endif; ?>
+			<?php if ( $pushchair_friendly ) : ?>
+				<div class="va-walk-stat">
+					<span class="va-walk-stat__value">👶</span>
+					<span class="va-walk-stat__label"><?php esc_html_e( 'Pushchair OK', 'visitaylesbury' ); ?></span>
+				</div>
+			<?php endif; ?>
+		</div>
+	</div>
+
 	<div class="va-container va-section">
 
 		<h1 class="va-single-walk__title"><?php echo esc_html( $walk_name ); ?></h1>
-
-		<div class="va-walk-stats">
-			<?php if ( $distance_miles ) : ?>
-				<span class="va-walk-stats__item"><?php echo esc_html( $distance_miles ); ?> miles</span>
-			<?php endif; ?>
-			<?php if ( $difficulty ) : ?>
-				<span class="va-badge va-badge--<?php echo esc_attr( strtolower( $difficulty ) ); ?>"><?php echo esc_html( $difficulty ); ?></span>
-			<?php endif; ?>
-			<?php if ( $estimated_time ) : ?>
-				<span class="va-walk-stats__item"><?php echo esc_html( $estimated_time ); ?></span>
-			<?php endif; ?>
-			<?php if ( $dog_friendly ) : ?>
-				<span class="va-walk-stats__item">Dog friendly</span>
-			<?php endif; ?>
-			<?php if ( $pushchair_friendly ) : ?>
-				<span class="va-walk-stats__item">Pushchair friendly</span>
-			<?php endif; ?>
-		</div>
 
 		<?php if ( $description ) : ?>
 			<div class="va-single-walk__description">
@@ -110,16 +132,34 @@ $terrain_labels = array(
 			</div>
 		<?php endif; ?>
 
-		<?php if ( $terrain && is_array( $terrain ) ) : ?>
-			<div class="va-single-walk__terrain">
-				<h2><?php esc_html_e( 'Terrain', 'visitaylesbury' ); ?></h2>
-				<div class="va-single-walk__terrain-list">
-					<?php foreach ( $terrain as $type ) : ?>
-						<?php if ( isset( $terrain_labels[ $type ] ) ) : ?>
-							<span class="va-badge va-badge--category"><?php echo esc_html( $terrain_labels[ $type ] ); ?></span>
-						<?php endif; ?>
-					<?php endforeach; ?>
-				</div>
+		<?php if ( ( $terrain && is_array( $terrain ) ) || $parking || $seasonal_notes ) : ?>
+			<div class="va-info-cards">
+				<?php if ( $terrain && is_array( $terrain ) ) : ?>
+					<div class="va-info-card">
+						<h3 class="va-info-card__title"><?php esc_html_e( 'Terrain', 'visitaylesbury' ); ?></h3>
+						<div class="va-info-card__tags">
+							<?php foreach ( $terrain as $type ) : ?>
+								<?php if ( isset( $terrain_labels[ $type ] ) ) : ?>
+									<span class="va-info-card__tag"><?php echo esc_html( $terrain_labels[ $type ] ); ?></span>
+								<?php endif; ?>
+							<?php endforeach; ?>
+						</div>
+					</div>
+				<?php endif; ?>
+
+				<?php if ( $parking ) : ?>
+					<div class="va-info-card">
+						<h3 class="va-info-card__title"><?php esc_html_e( 'Parking', 'visitaylesbury' ); ?></h3>
+						<p class="va-info-card__text"><?php echo esc_html( $parking ); ?></p>
+					</div>
+				<?php endif; ?>
+
+				<?php if ( $seasonal_notes ) : ?>
+					<div class="va-info-card">
+						<h3 class="va-info-card__title"><?php esc_html_e( 'Seasonal Notes', 'visitaylesbury' ); ?></h3>
+						<p class="va-info-card__text"><?php echo esc_html( $seasonal_notes ); ?></p>
+					</div>
+				<?php endif; ?>
 			</div>
 		<?php endif; ?>
 
@@ -142,20 +182,6 @@ $terrain_labels = array(
 						</li>
 					<?php endif; ?>
 				</ul>
-			</div>
-		<?php endif; ?>
-
-		<?php if ( $parking ) : ?>
-			<div class="va-single-walk__parking">
-				<h2><?php esc_html_e( 'Parking', 'visitaylesbury' ); ?></h2>
-				<p><?php echo esc_html( $parking ); ?></p>
-			</div>
-		<?php endif; ?>
-
-		<?php if ( $seasonal_notes ) : ?>
-			<div class="va-single-walk__seasonal">
-				<h2><?php esc_html_e( 'Seasonal Notes', 'visitaylesbury' ); ?></h2>
-				<p><?php echo esc_html( $seasonal_notes ); ?></p>
 			</div>
 		<?php endif; ?>
 

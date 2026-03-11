@@ -60,19 +60,39 @@ Eight items. Clean, practical, journey-led. Every section answers a real questio
 
 ## 4. URL Architecture
 
-### Core Hubs
+### Core Hubs (live)
 ```
-/                                   → Homepage
-/things-to-do/                      → Activity discovery hub
-/events/                            → Events hub
-/food-and-drink/                    → Food & Drink hub
-/directory/                         → Business directory
-/the-vale/                          → Aylesbury Vale hub
-/guides/                            → Editorial guides index
-/about/                             → About, contact, work with us
+/                                   → Homepage (front-page.php)
+/things-to-do/                      → Activity discovery hub (page-things-to-do.php)
+/events/                            → Events archive (archive-event.php)
+/food-and-drink/                    → Food & Drink hub (page-food-drink.php)
+/directory/                         → Business directory archive (archive-listing.php)
+/the-vale/                          → Aylesbury Vale hub (page-the-vale.php)
+/the-vale/walks/                    → Walks hub (page-vale-walks.php, child page)
+/guides/                            → Editorial guides index (page-guides.php)
+/about/                             → About page
 ```
 
-### Things to Do
+### CPT Single URLs (live)
+```
+/directory/[business-slug]/          → Single listing (single-listing.php)
+/events/[event-slug]/                → Single event (single-event.php)
+/walk/[walk-slug]/                   → Single walk (single-walk.php)
+/areas/[area-slug]/                  → Single area (single-area.php)
+/guides/[guide-slug]/                → Single guide (single-guide.php)
+```
+
+**Note:** Area CPT uses `/areas/` slug (not `/the-vale/`) to avoid conflict with The Vale parent page. Walk CPT uses `/walk/` (singular) to avoid conflict with the `/the-vale/walks/` child page. The Vale hub page and its Walks child page use the WordPress page hierarchy for their URLs.
+
+### Taxonomy Archive URLs (live)
+```
+/directory/category/[term-slug]/     → Listings by business category (taxonomy-business_category.php)
+/area/[term-slug]/                   → Cross-CPT archive by area (taxonomy-area_tax.php)
+/village/[term-slug]/                → Cross-CPT archive by village (taxonomy-vale_village.php)
+/events/category/[term-slug]/        → Events by category (taxonomy-event_category.php)
+```
+
+### Things to Do (planned child pages)
 ```
 /things-to-do/today/
 /things-to-do/this-weekend/
@@ -86,7 +106,7 @@ Eight items. Clean, practical, journey-led. Every section answers a real questio
 /things-to-do/nightlife/
 ```
 
-### Events
+### Events (planned filter pages)
 ```
 /events/this-week/
 /events/this-weekend/
@@ -98,7 +118,7 @@ Eight items. Clean, practical, journey-led. Every section answers a real questio
 /events/submit/
 ```
 
-### Food & Drink
+### Food & Drink (planned child pages)
 ```
 /food-and-drink/restaurants/
 /food-and-drink/pubs/
@@ -109,54 +129,32 @@ Eight items. Clean, practical, journey-led. Every section answers a real questio
 /food-and-drink/offers/
 ```
 
-### Directory
+### Directory (planned pages)
 ```
 /directory/browse/
-/directory/restaurants/
-/directory/shops/
-/directory/services/
-/directory/trades/
-/directory/health-and-wellbeing/
-/directory/professional-services/
-/directory/venues/
-/directory/[business-slug]/           → Single listing page
 /directory/add-business/
 /directory/claim/
 ```
 
-### The Vale
+### Guides (live — 17 published)
 ```
-/the-vale/waddesdon/
-/the-vale/wendover/
-/the-vale/haddenham/
-/the-vale/long-crendon/
-/the-vale/brill/
-/the-vale/quainton/
-/the-vale/weston-turville/
-/the-vale/stoke-mandeville/
-/the-vale/walks/
-/the-vale/walks/coombe-hill/
-/the-vale/walks/aylesbury-ring/
-/the-vale/day-trips-from-aylesbury/
-/the-vale/day-trips-to-aylesbury/
-```
-
-### Guides
-```
-/guides/visit-aylesbury/
-/guides/living-in-aylesbury/
+/guides/visit-aylesbury-your-complete-guide/
+/guides/living-in-aylesbury-the-complete-guide/
 /guides/aylesbury-for-families/
 /guides/aylesbury-for-foodies/
 /guides/aylesbury-for-dog-owners/
 /guides/aylesbury-for-history-lovers/
 /guides/aylesbury-for-commuters/
 /guides/business-in-aylesbury/
-/guides/getting-here-and-around/
+/guides/getting-here-and-around-aylesbury/
 /guides/christmas-in-aylesbury/
-/guides/best-market-towns-buckinghamshire/
+/guides/best-market-towns-in-buckinghamshire/
 /guides/hidden-gems-near-oxford/
-/guides/day-trips-from-london-buckinghamshire/
-/guides/david-bowie-aylesbury/
+/guides/day-trips-from-london-to-aylesbury/
+/guides/david-bowies-aylesbury-a-music-lovers-guide/
+/guides/things-to-do-in-aylesbury/
+/guides/free-things-to-do-in-aylesbury/
+/guides/best-sunday-lunch-in-aylesbury/
 ```
 
 ---
@@ -337,42 +335,35 @@ Posts link to listings, events, walks, and areas through inline links and a "Rel
 
 ---
 
-## 6. Homepage Architecture
+## 6. Homepage Architecture (live — front-page.php)
 
-The homepage answers six questions:
-
-1. What's happening soon?
-2. What can I do?
-3. Where should I eat and drink?
-4. What's beyond the town centre?
-5. Who's worth knowing about?
-6. Why should I come back?
+The homepage is a PHP template (not FSE) with 8 dynamic sections. All sections use WP_Query with automatic content — zero manual curation needed.
 
 ### Section-by-section:
 
-**1. Hero**
-Full-width image (seasonal rotation). Search bar: "What are you looking for?" Quick-action pills below: Things to Do, Events, Eat & Drink, The Vale, Directory. On mobile, these stack vertically as the primary entry points.
+**1. Hero** ✅
+Primary colour background. H1 "Discover Aylesbury and the Vale" with tagline. Quick-action pill links: Things to Do, Events, Eat & Drink, The Vale, Directory. Search form placeholder for Phase 2.
 
-**2. What's On This Week**
-Auto-populated horizontal scroll of the next 6-8 events. Image, title, date, venue, "Free" badge. Zero manual curation needed — pulls from events CPT by date.
+**2. What's On This Week** ✅
+Horizontal scroll row (`va-scroll-row`) of next 6 upcoming events where `start_date >= today`, ordered by date ascending. Uses `card-event` template part. Auto-populated from events CPT.
 
-**3. Things to Do This Weekend**
-Curated or auto-populated cards. Mix of events and guide teasers. "Family days out," "Free things to do," featured attraction. This section changes every week and creates a reason to return.
+**3. Featured Food & Drink** ✅ (light background)
+3 listing cards from `business_category` taxonomy: restaurants, pubs, or cafes. Uses `card-listing` template part in `va-grid--3`. Links to Food & Drink hub page.
 
-**4. Featured Food & Drink**
-3-4 restaurant/pub/cafe cards from listings with `food_drink` category and `featured` or `premium` tier. Seasonal rotation. Revenue slot. "Where to eat this week."
+**4. Explore the Vale** ✅
+Interactive Leaflet.js map with markers for all area CPT posts (plotted via lat/lng ACF fields). Below the map, 3 randomly rotated area cards using `card-area` template part. Links to The Vale hub page.
 
-**5. Explore the Vale**
-Interactive Leaflet.js map with village pins. Brief intro text. 3 featured village cards (Waddesdon, Wendover, Brill or seasonal rotation). This is the differentiator section that signals the site covers more than the town centre.
+**5. Walks & Countryside** ✅ (light background)
+3 randomly rotated walk cards using `card-walk` template part in `va-grid--3`. Links to `/the-vale/walks/` page.
 
-**6. Useful Guides**
-3 guide cards. Rotate based on season and audience: "Visit Aylesbury" in summer, "Christmas in Aylesbury" in December, "Living in Aylesbury" for evergreen traffic.
+**6. Useful Guides** ✅
+3 guide cards using `card-guide` template part. Shows guide type badge, seasonal flag, and "Updated" date. Links to Guides index page.
 
-**7. Featured Businesses**
-3-4 business cards from the directory. Spotlight Lottery: one randomly featured free-tier business alongside 2-3 paid featured/premium listings. Refreshes weekly.
+**7. Featured Businesses** ✅ (light background)
+3 listing cards. Queries featured/premium/sponsor tier listings first. Falls back to random listings if no paid tiers exist yet. Revenue-ready slot.
 
-**8. Newsletter Signup**
-"Get the best of Aylesbury in your inbox. Weekly events, local picks, and exclusive offers." Simple email capture. Builds the community list that becomes a revenue channel.
+**8. Newsletter Signup** ✅ (dark background)
+Centered layout with H2, tagline, and Gravity Form placeholder div. Dark section using `va-section--dark`.
 
 ---
 
@@ -399,35 +390,55 @@ Christmas in Aylesbury (November publish), Summer in the Vale (May), Easter Half
 
 ## 8. Technical Stack
 
-### WordPress FSE + ACF
-- Custom FSE theme. No page builder. Clean, fast, accessible.
-- Registered Gutenberg blocks for listings, events, maps, featured sections.
-- ACF Pro for all structured data on CPTs.
+### WordPress Hybrid FSE/PHP Theme
+- Custom hybrid theme: FSE handles the page shell (header, footer, base wrappers via `parts/` and `templates/`), while PHP templates handle all CPT rendering, hub pages, and the homepage.
+- PHP templates are forced over FSE block templates via a `template_include` filter at priority 1 in `inc/setup.php`. This intercepts requests before the block template system (`locate_block_template`) can override them.
+- No page builder. No Elementor. No Divi. ACF blocks and Gutenberg only.
+- ACF Pro for all structured data on CPTs. Field groups registered in PHP (`inc/acf-fields.php`), not JSON exports.
 - RankMath for on-page SEO and Schema.org output.
 - Gravity Forms for business submissions, event submissions, contact, and newsletter signup.
 - Matomo for analytics (self-hosted, GDPR-compliant, council-friendly).
 
+### Template Architecture (live)
+- `front-page.php` — PHP template with 8 dynamic WP_Query sections
+- `page-things-to-do.php`, `page-food-drink.php`, `page-the-vale.php`, `page-vale-walks.php`, `page-guides.php` — custom page templates registered via `theme_page_templates` filter
+- `single-listing.php`, `single-event.php`, `single-walk.php`, `single-area.php`, `single-guide.php` — CPT single templates
+- `archive-listing.php`, `archive-event.php` — CPT archive templates
+- `taxonomy-business_category.php`, `taxonomy-area_tax.php`, `taxonomy-vale_village.php`, `taxonomy-event_category.php` — taxonomy archive templates
+- All CPT templates delegate rendering to `template-parts/` partials (cards/ for grids, single/ for full views, components/ for reusable UI)
+
+### ACF Blocks (planned — not yet built)
+- Block registrations scaffolded in `inc/blocks.php` but no blocks have been built yet
+- Current implementation uses direct PHP templates and `get_template_part()` calls instead of ACF Gutenberg blocks
+- Blocks planned for Phase 2: listing-card, event-card, featured-grid, events-row, map-embed, cta-banner, newsletter-signup
+
 ### Maps
 - Leaflet.js with OpenStreetMap tiles (free, no API costs).
-- Custom markers by category. Cluster at zoom-out.
-- Map on: directory page, individual listings, area pages, walk pages, homepage Vale section.
+- Map assets conditionally loaded via `va_needs_map()` — only on singular listing/walk/area, listing archive, front page, and The Vale page.
+- Leaflet-GPX plugin for walk route rendering. Leaflet-Elevation plugin for elevation profiles.
+- Map on: homepage Vale section (all area markers), The Vale hub (all area markers, tall variant), individual area/walk/listing pages.
+- Marker clustering planned but not yet implemented.
 
-### Search
+### Search (planned)
 - Relevanssi or SearchWP for proper cross-CPT search.
 - Faceted filtering on directory: category, area, features, price range.
 - "Near me" functionality using browser geolocation + Leaflet.
 
-### Schema.org
-- `LocalBusiness` (and subtypes) on every listing
-- `Event` on every event
-- `TouristAttraction` on attraction listings
-- `ExerciseAction` and `TouristAttraction` on walks
-- `FAQPage` on guide pages where appropriate
-- `BreadcrumbList` sitewide
+### Schema.org (planned)
+- `inc/schema.php` exists but Schema output functions are not yet implemented
+- RankMath provides basic Schema markup sitewide
+- Custom JSON-LD output planned for:
+  - `LocalBusiness` (and subtypes) on every listing
+  - `Event` on every event
+  - `TouristAttraction` on attraction listings
+  - `ExerciseAction` and `TouristAttraction` on walks
+  - `FAQPage` on guide pages where appropriate
+  - `BreadcrumbList` sitewide
 
 ### Performance
 - Target sub-2-second load. Lazy-loaded images. Minimal JS. Server-side caching. CDN.
-- Managed WordPress hosting (Cloudways, SpinupWP, or GridPane on a VPS).
+- Currently running on Local by Flywheel for development.
+- Production hosting: Managed WordPress (Cloudways, SpinupWP, or GridPane on a VPS).
 
 ---
 
@@ -436,41 +447,62 @@ Christmas in Aylesbury (November publish), Summer in the Vale (May), Easter Half
 ### Objective
 Build the minimum complete experience that proves usefulness, attracts an audience, and generates early commercial interest.
 
-### Phase 1 delivers:
-- Homepage with all 8 sections functional
-- Things to Do hub with 5+ child pages
-- Events hub with date filtering and submission form
-- Food & Drink hub with category pages
-- Directory with 500+ pre-populated listings (scraped from Google Business Profiles, Yell, existing sources)
-- Business claim and submission flow
-- 6-8 Vale area pages (Waddesdon, Wendover, Haddenham, Brill, Long Crendon, Quainton, Stoke Mandeville, Weston Turville)
-- 3-5 walks with GPX downloads
-- 10-15 guide pages targeting priority keywords
-- Newsletter signup
-- Leaflet.js map integration
-- Schema.org markup on all CPTs
-- Matomo analytics
-- Featured listing placements (revenue-ready from day one)
+### Current build status (March 2026):
+
+**Templates built:** ✅
+- Homepage with all 8 sections functional (`front-page.php`)
+- Things to Do hub (`page-things-to-do.php`)
+- Events archive (`archive-event.php`)
+- Food & Drink hub (`page-food-drink.php`)
+- Directory/listings archive (`archive-listing.php`)
+- The Vale hub with interactive map (`page-the-vale.php`)
+- Vale Walks index (`page-vale-walks.php`)
+- Guides index grouped by type (`page-guides.php`)
+- All 5 CPT single templates (listing, event, walk, area, guide)
+- All 4 taxonomy archive templates (business_category, area_tax, vale_village, event_category)
+- Card components for all 5 CPTs + badge, features-list, opening-hours, social-links, map-single
+
+**Content seeded:**
+- 53 listings (seed data — target 500+ from scraping before launch)
+- 28 events (seed data with future dates)
+- 8 walks with distances, difficulty, start points
+- 8 areas (Waddesdon, Wendover, Haddenham, Brill, Long Crendon, Quainton, Stoke Mandeville, Weston Turville)
+- 17 guides covering visitor, seasonal, living, business, audience, and day trip types
+
+**Still needed for launch:**
+- Business directory bulk import (scrape 500+ from Google Business Profiles, Yell, existing sources)
+- Business claim and submission flow (Gravity Forms)
+- Event submission form (Gravity Forms)
+- Custom JSON-LD Schema output per CPT (inc/schema.php)
+- Cross-CPT search (Relevanssi or SearchWP)
+- Faceted directory filtering (search-filters.js)
+- Map marker clustering
+- Newsletter integration (Gravity Forms + email service)
+- Matomo analytics setup
+- Things to Do child pages (today, this-weekend, free, family, etc.)
+- Real event data and listing content to replace seed data
+- Image assets (hero images, gallery photos — currently using placeholders)
+- Production hosting setup and deployment
 
 ### Priority launch content:
-1. Home
-2. Things to Do in Aylesbury (hub)
-3. What's On in Aylesbury (events hub)
-4. Food and Drink in Aylesbury (hub)
-5. Visit Aylesbury (guide)
-6. Living in Aylesbury (guide)
-7. Aylesbury for Families (guide)
-8. Free Things to Do in Aylesbury (guide)
-9. Best Sunday Lunch in Aylesbury (editorial)
-10. Waddesdon (area)
-11. Wendover / Wendover Woods (area + walk)
-12. Haddenham (area)
-13. Brill (area)
-14. Coombe Hill Walk (walk)
-15. Aylesbury Town Centre (guide)
-16. David Bowie's Aylesbury (guide)
-17. Seasonal guide (whichever season we launch in)
-18. Business directory with 500+ listings
+1. ✅ Home
+2. ✅ Things to Do in Aylesbury (hub)
+3. ✅ What's On in Aylesbury (events hub)
+4. ✅ Food and Drink in Aylesbury (hub)
+5. ✅ Visit Aylesbury (guide)
+6. ✅ Living in Aylesbury (guide)
+7. ✅ Aylesbury for Families (guide)
+8. ✅ Free Things to Do in Aylesbury (guide)
+9. ✅ Best Sunday Lunch in Aylesbury (guide)
+10. ✅ Waddesdon (area)
+11. ✅ Wendover (area)
+12. ✅ Haddenham (area)
+13. ✅ Brill (area)
+14. ✅ Coombe Hill Walk (walk)
+15. ⬜ Aylesbury Town Centre (guide — not yet created)
+16. ✅ David Bowie's Aylesbury (guide)
+17. ✅ Christmas in Aylesbury (seasonal guide)
+18. ⬜ Business directory with 500+ listings (53 seeded, bulk import pending)
 
 ---
 

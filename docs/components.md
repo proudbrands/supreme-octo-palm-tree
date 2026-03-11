@@ -514,6 +514,50 @@ Styled popups that match the VA design system. Replace Leaflet's default popup s
 
 ---
 
+## Mega Menu Navigation ✅
+
+Full-width mega menu navigation replacing the simple nav links. PHP partial at `template-parts/components/mega-menu.php`. JS in `assets/js/navigation.js`.
+
+### Header (`.va-header`)
+- Sticky, `z-index: 1000`, white bg, subtle shadow `0 1px 3px rgba(0,0,0,0.06)`
+- Inner: max-width container, `height: 64px`, flex between
+- Logo: `aylesbury.town` text, 1.25rem/700 primary, no underline
+- CTA: `Add Your Business`, accent bg, white text, `border-radius: 8px`, `padding: 0.5rem 1.15rem`
+
+### Desktop Nav (`.va-nav`)
+- Visible from 1024px, hidden below
+- Top-level links: 0.95rem/500, `color: #333`, hover → teal, active → teal + 600 weight
+- Items with dropdowns use `<button>` with SVG chevron (10×6px), rotates 180deg when open
+- Generous padding per item (`0.5rem 1rem`)
+
+### Mega Panels (`.va-mega`)
+- `z-index: 999`, full-width, white bg, `border-radius: 0 0 16px 16px`
+- `box-shadow: 0 12px 32px rgba(0,0,0,0.08)`, `border-top: 1px solid #e8e8ec`
+- Animate: `opacity 0→1, translateY(-8px)→0` over 0.2s ease
+- Open delay: 100ms, close delay: 200ms (lets cursor travel into panel)
+- Column headings: 0.75rem uppercase/700, `color: #888`, `letter-spacing: 0.05em`
+- Links: 0.95rem/400, `color: #333`, hover → teal + translateX(3px)
+
+### Mega Panels Content
+- **Things to Do**: 3 columns (Explore links, Popular links, featured guide card)
+- **The Vale**: 3 columns (Villages links, Explore links, featured area card)
+- **Guides**: 2 columns (Visitor Guides, Living & Business), max-width 640px
+
+### Featured Card in Mega Panel (`.va-mega-card`)
+- `border-radius: 12px`, surface bg, image `aspect-ratio: 16/9`
+- Label: 0.65rem uppercase teal, title: 1rem/600 primary, action: 0.85rem teal
+- Hover: shadow + translateY(-2px) + image scale 1.03
+
+### Mobile Menu
+- Hamburger (`.va-header__burger`): 3 lines, 20px wide, 2px height, 5px gap, animates to X
+- Overlay (`.va-mobile-overlay`): `z-index: 998`, `rgba(0,0,0,0.3)`, fade in
+- Drawer (`.va-mobile-drawer`): slides from right, `z-index: 999`, `max-width: 380px`, full height below header
+- Nav items: 1.15rem/500, `padding: 1rem 1.5rem`, `min-height: 56px`
+- Accordion: plus icon → rotates 45deg to X, sub-links indented to `padding-left: 2.5rem`, max-height animation 0.25s, only one open at a time
+- CTA at bottom: full-width accent red button
+
+---
+
 ## Spacing Rhythm ✅
 
 - `.va-section`: `padding: 3rem 0` mobile, `padding: 5rem 0` from 1024px

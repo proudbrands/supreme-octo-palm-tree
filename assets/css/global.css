@@ -1844,90 +1844,317 @@ a:focus-visible {
 /* Site Footer
    ========================================================================== */
 
-.va-site-footer {
-	background: var(--wp--preset--color--dark);
-	color: rgba(255, 255, 255, 0.6);
+/* Footer — Layer 1: Upper links
+   ========================================================================== */
+
+.va-footer-upper {
+	background: var(--wp--preset--color--surface, #f7f7f9);
+	padding: 4rem 0 3rem;
 }
 
-.va-site-footer__inner {
-	max-width: var(--va-content-max);
-	margin-inline: auto;
-	padding: 4rem 1.5rem 2rem;
-}
-
-@media (min-width: 768px) {
-	.va-site-footer__inner {
-		padding: 4rem 2rem 2rem;
-	}
-}
-
-.va-site-footer__grid {
+.va-footer-grid {
 	display: grid;
-	gap: 2rem;
+	gap: 2rem 1.5rem;
+	grid-template-columns: repeat(2, 1fr);
 }
 
 @media (min-width: 768px) {
-	.va-site-footer__grid {
-		grid-template-columns: 1.5fr 1fr 1fr;
-		gap: 3rem;
+	.va-footer-grid {
+		grid-template-columns: repeat(3, 1fr);
+		gap: 2rem;
 	}
 }
 
-.va-site-footer__brand-name {
-	font-size: 1.25rem;
+@media (min-width: 1024px) {
+	.va-footer-grid {
+		grid-template-columns: repeat(5, 1fr);
+		gap: 2rem;
+	}
+}
+
+/* Footer column */
+.va-footer-col__heading {
+	font-size: 0.95rem;
 	font-weight: 700;
-	color: var(--wp--preset--color--white);
-	margin: 0 0 0.5rem;
+	color: var(--wp--preset--color--primary);
+	margin: 0 0 1.25rem;
 }
 
-.va-site-footer__brand-tagline {
-	font-size: 0.9rem;
-	color: rgba(255, 255, 255, 0.6);
-	margin: 0;
-	max-width: none;
-}
-
-.va-site-footer__heading {
-	font-size: 0.85rem;
-	font-weight: 600;
-	text-transform: uppercase;
-	letter-spacing: 0.05em;
-	color: var(--wp--preset--color--white);
-	margin: 0 0 1rem;
-}
-
-.va-site-footer__links {
+.va-footer-col__links {
 	list-style: none;
 	padding: 0;
 	margin: 0;
 }
 
-.va-site-footer__links li {
-	margin-bottom: 0.5rem;
+.va-footer-col__links li {
+	margin: 0;
 }
 
-.va-site-footer__links a {
+.va-footer-col__links a {
+	display: block;
+	padding: 0.6rem 0;
 	font-size: 0.9rem;
-	color: rgba(255, 255, 255, 0.6);
+	font-weight: 400;
+	color: #555;
 	text-decoration: none;
-	transition: color var(--va-transition-fast);
+	transition: color 0.15s ease;
 }
 
-.va-site-footer__links a:hover {
+.va-footer-col__links a:hover {
+	color: var(--wp--preset--color--teal);
+	text-decoration: none;
+}
+
+/* The Vale village thumbnail cards */
+.va-footer-villages {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+}
+
+.va-footer-village {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	text-decoration: none;
+	color: inherit;
+}
+
+.va-footer-village:hover {
+	text-decoration: none;
+	color: inherit;
+}
+
+.va-footer-village__image {
+	width: 56px;
+	height: 56px;
+	border-radius: 8px;
+	overflow: hidden;
+	flex-shrink: 0;
+}
+
+.va-footer-village__img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform 0.2s ease;
+}
+
+.va-footer-village:hover .va-footer-village__img {
+	transform: scale(1.05);
+}
+
+.va-footer-village__placeholder {
+	width: 100%;
+	height: 100%;
+	background: #e8e8ec;
+	border-radius: 8px;
+}
+
+.va-footer-village__text {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+}
+
+.va-footer-village__name {
+	font-size: 0.9rem;
+	font-weight: 600;
+	color: var(--wp--preset--color--primary);
+	line-height: 1.3;
+}
+
+.va-footer-village__action {
+	font-size: 0.8rem;
+	color: #888;
+	transition: color 0.15s ease;
+}
+
+.va-footer-village:hover .va-footer-village__action {
+	color: var(--wp--preset--color--teal);
+}
+
+/* Footer — Layer 2: Newsletter bar
+   ========================================================================== */
+
+.va-footer-newsletter-wrap {
+	position: relative;
+	z-index: 2;
+	margin-top: -0.5rem;
+	margin-bottom: -0.5rem;
+}
+
+.va-footer-newsletter {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+	background: var(--wp--preset--color--dark);
+	border-radius: 16px;
+	padding: 2rem 2.5rem;
+}
+
+@media (min-width: 768px) {
+	.va-footer-newsletter {
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+	}
+}
+
+.va-footer-newsletter__content {
+	display: flex;
+	align-items: flex-start;
+	gap: 1rem;
+}
+
+@media (max-width: 767px) {
+	.va-footer-newsletter__content {
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+	}
+}
+
+.va-footer-newsletter__icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	background: rgba(230, 57, 70, 0.12);
+	flex-shrink: 0;
+}
+
+.va-footer-newsletter__text {
+	min-width: 0;
+}
+
+.va-footer-newsletter__title {
+	font-size: 1.1rem;
+	font-weight: 700;
+	color: var(--wp--preset--color--white);
+	margin: 0 0 0.25rem;
+}
+
+.va-footer-newsletter__subtitle {
+	font-size: 0.85rem;
+	color: rgba(255, 255, 255, 0.6);
+	margin: 0;
+	max-width: none;
+}
+
+.va-footer-newsletter__form {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+	flex-shrink: 0;
+}
+
+@media (min-width: 640px) {
+	.va-footer-newsletter__form {
+		flex-direction: row;
+		gap: 0;
+	}
+}
+
+.va-footer-newsletter__input-wrap {
+	position: relative;
+	flex: 1;
+}
+
+.va-footer-newsletter__input {
+	width: 100%;
+	padding: 0.85rem 1.25rem;
+	font-size: 0.95rem;
+	color: var(--wp--preset--color--white);
+	background: rgba(255, 255, 255, 0.08);
+	border: 1px solid rgba(255, 255, 255, 0.15);
+	border-radius: 12px;
+	outline: none;
+	font-family: inherit;
+	transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+@media (min-width: 640px) {
+	.va-footer-newsletter__input {
+		border-radius: 12px 0 0 12px;
+		border-right: 0;
+		min-width: 240px;
+	}
+}
+
+.va-footer-newsletter__input::placeholder {
+	color: rgba(255, 255, 255, 0.4);
+}
+
+.va-footer-newsletter__input:focus {
+	border-color: rgba(255, 255, 255, 0.35);
+	background: rgba(255, 255, 255, 0.12);
+}
+
+.va-footer-newsletter__btn {
+	padding: 0.85rem 1.75rem;
+	font-size: 0.95rem;
+	font-weight: 600;
+	color: var(--wp--preset--color--white);
+	background: var(--wp--preset--color--accent);
+	border: none;
+	border-radius: 12px;
+	cursor: pointer;
+	font-family: inherit;
+	white-space: nowrap;
+	transition: background 0.15s ease;
+	min-height: 44px;
+}
+
+@media (min-width: 640px) {
+	.va-footer-newsletter__btn {
+		border-radius: 0 12px 12px 0;
+	}
+}
+
+.va-footer-newsletter__btn:hover {
+	background: var(--wp--preset--color--primary);
+}
+
+/* Footer — Layer 3: Copyright bar
+   ========================================================================== */
+
+.va-footer-copyright {
+	background: var(--wp--preset--color--dark);
+	padding: 1.5rem 0;
+}
+
+.va-footer-copyright__inner {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+@media (max-width: 639px) {
+	.va-footer-copyright__inner {
+		flex-direction: column;
+		text-align: center;
+		gap: 0.5rem;
+	}
+}
+
+.va-footer-copyright__brand {
+	font-size: 1.1rem;
+	font-weight: 700;
 	color: var(--wp--preset--color--white);
 	text-decoration: none;
 }
 
-.va-site-footer__bottom {
-	margin-top: 3rem;
-	padding-top: 1.5rem;
-	border-top: 1px solid rgba(255, 255, 255, 0.1);
-	text-align: center;
+.va-footer-copyright__brand:hover {
+	color: var(--wp--preset--color--white);
+	text-decoration: none;
 }
 
-.va-site-footer__copyright {
+.va-footer-copyright__text {
 	font-size: 0.8rem;
-	color: rgba(255, 255, 255, 0.4);
+	color: rgba(255, 255, 255, 0.5);
 	margin: 0;
 	max-width: none;
 }

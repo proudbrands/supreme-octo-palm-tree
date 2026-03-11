@@ -29,3 +29,23 @@ function va_maybe_inject_mega_menu() {
 	$va_mega_menu_loaded = true;
 	get_template_part( 'template-parts/components/mega-menu' );
 }
+
+/**
+ * Inject footer on FSE (block template) pages.
+ *
+ * PHP templates load the footer via footer.php → get_template_part().
+ * FSE pages need it injected via wp_footer.
+ */
+add_action( 'wp_footer', 'va_maybe_inject_footer', 1 );
+
+function va_maybe_inject_footer() {
+	global $va_footer_loaded;
+	if ( ! empty( $va_footer_loaded ) ) {
+		return;
+	}
+
+	$va_footer_loaded = true;
+	echo '<footer class="va-footer" role="contentinfo">';
+	get_template_part( 'template-parts/components/footer' );
+	echo '</footer>';
+}

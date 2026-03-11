@@ -558,6 +558,36 @@ Full-width mega menu navigation replacing the simple nav links. PHP partial at `
 
 ---
 
+## Site Footer ✅
+
+Three-layer footer. PHP partial at `template-parts/components/footer.php`, wrapped in `<footer class="va-footer">` by `footer.php`.
+
+### Layer 1: Upper Footer Links (`.va-footer-upper`)
+- Background: surface `#f7f7f9`, `padding: 4rem 0 3rem`
+- 5-column grid on desktop (1024px), 3 on tablet (768px), 2 on mobile
+- Column heading: 0.95rem/700 primary, `margin-bottom: 1.25rem`
+- Links: 0.9rem/400 `#555`, `padding: 0.6rem 0`, hover → teal
+
+**Columns:** Explore, Directory, Guides, The Vale (village thumbnail cards), Useful
+
+**Village cards** (`.va-footer-village`): horizontal flex, 56×56px image with `border-radius: 8px`, village name 0.9rem/600 primary, "Explore village" subtitle 0.8rem `#888`. Image scales 1.05 on hover.
+
+### Layer 2: Newsletter Bar (`.va-footer-newsletter`)
+- Floats between layers via `margin-top: -0.5rem; margin-bottom: -0.5rem`, `z-index: 2`
+- Background: dark `#0F1B2D`, `border-radius: 16px`, `padding: 2rem 2.5rem`
+- Left: 48px icon circle (light pink bg with envelope SVG) + title 1.1rem/700 white + subtitle 0.85rem `rgba(255,255,255,0.6)`
+- Right: email input (`rgba(255,255,255,0.08)` bg, `border-radius: 12px`) + Subscribe button (accent, `border-radius: 12px`)
+- Desktop: single row flex. Mobile: stacked vertically, centred
+- Input + button join seamlessly on desktop (left/right border-radius)
+
+### Layer 3: Copyright Bar (`.va-footer-copyright`)
+- Background: dark `#0F1B2D` (same as newsletter), `padding: 1.5rem 0`
+- Left: `aylesbury.town` brand text, 1.1rem/700 white
+- Right: copyright text, 0.8rem `rgba(255,255,255,0.5)`
+- Mobile: stacks vertically, centred
+
+---
+
 ## Spacing Rhythm ✅
 
 - `.va-section`: `padding: 3rem 0` mobile, `padding: 5rem 0` from 1024px

@@ -163,3 +163,222 @@ a:focus-visible {
 .va-text-small {
 	font-size: 0.85rem;
 }
+
+/* Hero
+   ========================================================================== */
+
+.va-hero {
+	position: relative;
+	padding: var(--wp--preset--spacing--80) var(--wp--preset--spacing--40);
+	background-color: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--white);
+	text-align: center;
+}
+
+.va-hero h1 {
+	font-size: clamp(1.75rem, 4vw, 2.75rem);
+	font-weight: 700;
+	margin-bottom: var(--wp--preset--spacing--30);
+}
+
+.va-hero p {
+	font-size: 1.15rem;
+	opacity: 0.85;
+	max-width: 560px;
+	margin-inline: auto;
+}
+
+.va-hero__search {
+	max-width: 520px;
+	margin: var(--wp--preset--spacing--50) auto 0;
+}
+
+.va-hero__pills {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: var(--wp--preset--spacing--30);
+	margin-top: var(--wp--preset--spacing--50);
+}
+
+.va-hero__pill {
+	display: inline-block;
+	padding: 0.45rem 1rem;
+	font-size: 0.85rem;
+	font-weight: 500;
+	color: var(--wp--preset--color--white);
+	background: rgba(255, 255, 255, 0.15);
+	border-radius: 9999px;
+	text-decoration: none;
+	transition: background 0.2s ease;
+}
+
+.va-hero__pill:hover {
+	background: rgba(255, 255, 255, 0.25);
+	color: var(--wp--preset--color--white);
+}
+
+/* Section Variants
+   ========================================================================== */
+
+.va-section--dark {
+	background-color: var(--wp--preset--color--dark);
+	color: var(--wp--preset--color--white);
+}
+
+.va-section--dark h2 {
+	color: var(--wp--preset--color--white);
+}
+
+.va-section--dark p {
+	opacity: 0.8;
+}
+
+.va-section--light {
+	background-color: var(--wp--preset--color--light);
+}
+
+/* Newsletter
+   ========================================================================== */
+
+.va-newsletter {
+	text-align: center;
+	max-width: 520px;
+	margin-inline: auto;
+}
+
+.va-newsletter h2 {
+	margin-bottom: var(--wp--preset--spacing--30);
+}
+
+.va-newsletter__form {
+	margin-top: var(--wp--preset--spacing--50);
+}
+
+/* Quick-action pills row (used on Things to Do, etc.)
+   ========================================================================== */
+
+.va-pill-row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--wp--preset--spacing--30);
+	margin-bottom: var(--wp--preset--spacing--60);
+}
+
+.va-pill {
+	display: inline-block;
+	padding: 0.4rem 1rem;
+	font-size: 0.85rem;
+	font-weight: 500;
+	color: var(--wp--preset--color--primary);
+	background: var(--wp--preset--color--light);
+	border-radius: 9999px;
+	text-decoration: none;
+	transition: background 0.2s ease, color 0.2s ease;
+}
+
+.va-pill:hover {
+	background: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--white);
+}
+
+/* Guide card variant
+   ========================================================================== */
+
+.va-card--guide {
+	background: var(--wp--preset--color--white);
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+	transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.va-card--guide:hover {
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+	transform: translateY(-2px);
+}
+
+.va-card__updated {
+	font-size: 0.75rem;
+	color: var(--wp--preset--color--grey-600);
+	margin-top: 0.35rem;
+}
+
+/* Single Guide
+   ========================================================================== */
+
+.va-single-guide__hero {
+	width: 100%;
+	max-height: 500px;
+	overflow: hidden;
+}
+
+.va-single-guide__hero-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.va-single-guide__header {
+	margin-bottom: 1.5rem;
+}
+
+.va-single-guide__title {
+	color: var(--wp--preset--color--primary);
+	margin: 0 0 0.5rem;
+}
+
+.va-single-guide__meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	align-items: center;
+	margin-bottom: 1.5rem;
+}
+
+.va-single-guide__content {
+	margin-bottom: 2rem;
+	line-height: 1.7;
+}
+
+.va-single-guide__content h2 {
+	margin-top: 2rem;
+	margin-bottom: 0.75rem;
+}
+
+.va-single-guide__content h3 {
+	margin-top: 1.5rem;
+	margin-bottom: 0.5rem;
+}
+
+.va-single-guide__content p {
+	margin-bottom: 1rem;
+}
+
+.va-single-guide__cta {
+	margin-bottom: 2rem;
+	padding: 1.5rem;
+	background: var(--wp--preset--color--light);
+	border-radius: 8px;
+	text-align: center;
+}
+
+.va-single-guide__cta-btn {
+	display: inline-block;
+	padding: 0.65rem 1.5rem;
+	background: var(--wp--preset--color--accent);
+	color: var(--wp--preset--color--white);
+	border-radius: 6px;
+	font-weight: 600;
+	text-decoration: none;
+	transition: background 0.2s ease;
+}
+
+.va-single-guide__cta-btn:hover {
+	background: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--white);
+}
+
+.va-single-guide__related {
+	margin-bottom: 2rem;
+}

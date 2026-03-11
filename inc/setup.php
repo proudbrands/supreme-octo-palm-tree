@@ -44,8 +44,11 @@ function va_theme_setup() {
 add_filter( 'theme_page_templates', 'va_register_page_templates' );
 
 function va_register_page_templates( $templates ) {
-	$templates['page-vale-walks.php'] = __( 'Vale Walks', 'visitaylesbury' );
-	$templates['page-food-drink.php'] = __( 'Food and Drink', 'visitaylesbury' );
+	$templates['page-vale-walks.php']  = __( 'Vale Walks', 'visitaylesbury' );
+	$templates['page-food-drink.php']  = __( 'Food and Drink', 'visitaylesbury' );
+	$templates['page-things-to-do.php'] = __( 'Things to Do', 'visitaylesbury' );
+	$templates['page-the-vale.php']    = __( 'The Vale', 'visitaylesbury' );
+	$templates['page-guides.php']      = __( 'Guides', 'visitaylesbury' );
 
 	return $templates;
 }

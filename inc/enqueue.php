@@ -92,5 +92,7 @@ function va_enqueue_assets() {
  */
 function va_needs_map() {
 	return is_singular( array( 'listing', 'walk', 'area' ) )
-		|| is_post_type_archive( 'listing' );
+		|| is_post_type_archive( 'listing' )
+		|| is_front_page()
+		|| is_page_template( 'page-the-vale.php' );
 }

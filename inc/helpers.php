@@ -19,15 +19,13 @@ defined( 'ABSPATH' ) || exit;
 add_action( 'wp_body_open', 'va_maybe_inject_mega_menu' );
 
 function va_maybe_inject_mega_menu() {
-	// If this is a PHP template page, header.php already loaded the mega menu.
-	// Detect by checking if we're in a block template render.
-	if ( ! wp_is_block_theme() ) {
+	// Skip if header.php already loaded the mega menu (flag set before wp_body_open).
+	global $va_mega_menu_loaded;
+	if ( ! empty( $va_mega_menu_loaded ) ) {
 		return;
 	}
 
-	// Only inject if the PHP header.php didn't already run (i.e., FSE page).
-	global $va_mega_menu_loaded;
-	if ( empty( $va_mega_menu_loaded ) ) {
-		get_template_part( 'template-parts/components/mega-menu' );
-	}
+	// FSE pages don't use header.php, so inject the mega menu here.
+	$va_mega_menu_loaded = true;
+	get_template_part( 'template-parts/components/mega-menu' );
 }

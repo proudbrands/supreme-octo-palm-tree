@@ -13,10 +13,10 @@
 	<?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
-<?php wp_body_open(); ?>
-
 <?php
 global $va_mega_menu_loaded;
 $va_mega_menu_loaded = true;
-get_template_part( 'template-parts/components/mega-menu' );
 ?>
+<?php wp_body_open(); ?>
+
+<?php get_template_part( 'template-parts/components/mega-menu' ); ?>

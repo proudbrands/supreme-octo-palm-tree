@@ -1,0 +1,742 @@
+/* ==========================================================================
+   Components — approved component styles from docs/components.md
+   ========================================================================== */
+
+/* Card — shared
+   ========================================================================== */
+
+.va-card__link {
+	display: block;
+	text-decoration: none;
+	color: inherit;
+}
+
+/* Card — listing variant
+   ========================================================================== */
+
+.va-card--listing {
+	background: var(--wp--preset--color--white);
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+	transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.va-card--listing:hover {
+	box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+	transform: translateY(-2px);
+}
+
+.va-card__image {
+	position: relative;
+	aspect-ratio: 16 / 10;
+	overflow: hidden;
+}
+
+.va-card__img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.va-card__image--placeholder {
+	background-color: var(--wp--preset--color--grey-200);
+}
+
+.va-card__body {
+	padding: 1rem;
+}
+
+.va-card__title {
+	font-size: 1.1rem;
+	font-weight: 600;
+	color: var(--wp--preset--color--primary);
+	margin: 0 0 0.25rem;
+}
+
+.va-card__tagline {
+	font-size: 0.9rem;
+	color: var(--wp--preset--color--grey-600);
+	margin: 0 0 0.5rem;
+}
+
+.va-card__meta {
+	display: flex;
+	gap: 0.75rem;
+	font-size: 0.8rem;
+	color: var(--wp--preset--color--grey-600);
+}
+
+/* Card — walk variant
+   ========================================================================== */
+
+.va-card--walk {
+	background: var(--wp--preset--color--white);
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+	transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.va-card--walk:hover {
+	box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+	transform: translateY(-2px);
+}
+
+.va-card__stats {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	margin-top: 0.5rem;
+}
+
+.va-card__stat {
+	display: inline-block;
+	padding: 0.15rem 0.5rem;
+	font-size: 0.75rem;
+	font-weight: 500;
+	color: var(--wp--preset--color--grey-600);
+	background: var(--wp--preset--color--light);
+	border-radius: 4px;
+}
+
+.va-card__stat--easy {
+	color: var(--wp--preset--color--teal);
+	background: rgba(42, 157, 143, 0.1);
+}
+
+.va-card__stat--moderate {
+	color: #E76F51;
+	background: rgba(231, 111, 81, 0.1);
+}
+
+.va-card__stat--challenging {
+	color: var(--wp--preset--color--accent);
+	background: rgba(230, 57, 70, 0.1);
+}
+
+/* Card — area variant
+   ========================================================================== */
+
+.va-card--area {
+	background: var(--wp--preset--color--white);
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+	transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.va-card--area:hover {
+	box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+	transform: translateY(-2px);
+}
+
+.va-card__image--wide {
+	aspect-ratio: 16 / 9;
+}
+
+.va-card__population {
+	font-size: 0.8rem;
+	color: var(--wp--preset--color--grey-600);
+}
+
+/* Card — event variant
+   ========================================================================== */
+
+.va-card--event {
+	background: var(--wp--preset--color--white);
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+	transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.va-card--event:hover {
+	box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+	transform: translateY(-2px);
+}
+
+.va-card--event .va-card__body {
+	display: flex;
+	gap: 1rem;
+	padding: 1rem;
+}
+
+.va-card__date {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-width: 3rem;
+	padding: 0.5rem;
+	background: var(--wp--preset--color--light);
+	border-radius: 6px;
+	text-align: center;
+}
+
+.va-card__date-day {
+	font-size: 1.25rem;
+	font-weight: 700;
+	color: var(--wp--preset--color--accent);
+	line-height: 1;
+}
+
+.va-card__date-month {
+	font-size: 0.7rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	color: var(--wp--preset--color--grey-600);
+}
+
+.va-card__venue {
+	font-size: 0.85rem;
+	color: var(--wp--preset--color--grey-600);
+	margin: 0.15rem 0 0;
+}
+
+.va-card__time {
+	font-size: 0.8rem;
+	color: var(--wp--preset--color--teal);
+}
+
+/* Badge
+   ========================================================================== */
+
+.va-badge {
+	display: inline-block;
+	padding: 0.2rem 0.6rem;
+	font-size: 0.7rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+	border-radius: 4px;
+	line-height: 1.4;
+}
+
+.va-badge--category {
+	background: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--white);
+}
+
+.va-badge--featured {
+	background: var(--wp--preset--color--accent);
+	color: var(--wp--preset--color--white);
+}
+
+.va-badge--free {
+	background: var(--wp--preset--color--teal);
+	color: var(--wp--preset--color--white);
+}
+
+.va-badge--family {
+	background: #F4A261;
+	color: var(--wp--preset--color--dark);
+}
+
+.va-badge--easy {
+	background: var(--wp--preset--color--teal);
+	color: var(--wp--preset--color--white);
+}
+
+.va-badge--moderate {
+	background: #F4A261;
+	color: var(--wp--preset--color--dark);
+}
+
+.va-badge--challenging {
+	background: var(--wp--preset--color--accent);
+	color: var(--wp--preset--color--white);
+}
+
+/* Badge positioning on card images */
+.va-card__image .va-badge {
+	position: absolute;
+	top: 0.75rem;
+	left: 0.75rem;
+	z-index: 2;
+}
+
+.va-card__image .va-badge + .va-badge {
+	left: auto;
+	right: 0.75rem;
+}
+
+/* Grid
+   ========================================================================== */
+
+.va-grid {
+	display: grid;
+	gap: 1.5rem;
+}
+
+.va-grid--3 {
+	grid-template-columns: repeat(1, 1fr);
+}
+
+@media (min-width: 640px) {
+	.va-grid--3 {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (min-width: 1024px) {
+	.va-grid--3 {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+.va-grid--4 {
+	grid-template-columns: repeat(1, 1fr);
+}
+
+@media (min-width: 640px) {
+	.va-grid--4 {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (min-width: 1024px) {
+	.va-grid--4 {
+		grid-template-columns: repeat(4, 1fr);
+	}
+}
+
+/* Horizontal Scroll Row
+   ========================================================================== */
+
+.va-scroll-row {
+	margin: 0;
+}
+
+.va-scroll-row__inner {
+	display: flex;
+	gap: 1.25rem;
+	overflow-x: auto;
+	scroll-snap-type: x mandatory;
+	-webkit-overflow-scrolling: touch;
+	scrollbar-width: none;
+	padding-bottom: 0.5rem;
+}
+
+.va-scroll-row__inner::-webkit-scrollbar {
+	display: none;
+}
+
+.va-scroll-row__inner > * {
+	flex: 0 0 280px;
+	scroll-snap-align: start;
+}
+
+@media (min-width: 768px) {
+	.va-scroll-row__inner > * {
+		flex: 0 0 320px;
+	}
+}
+
+/* Section Header
+   ========================================================================== */
+
+.va-section-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	margin-bottom: 1.25rem;
+}
+
+.va-section-header__title {
+	font-size: 1.5rem;
+	font-weight: 700;
+	color: var(--wp--preset--color--primary);
+	margin: 0;
+}
+
+.va-section-header__link {
+	font-size: 0.9rem;
+	font-weight: 500;
+	color: var(--wp--preset--color--teal);
+	text-decoration: none;
+}
+
+.va-section-header__link:hover {
+	text-decoration: underline;
+}
+
+/* Single Walk
+   ========================================================================== */
+
+.va-single-walk__hero {
+	width: 100%;
+	max-height: 500px;
+	overflow: hidden;
+}
+
+.va-single-walk__hero-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.va-single-walk__title {
+	color: var(--wp--preset--color--primary);
+	margin: 0 0 1rem;
+}
+
+.va-walk-stats {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	margin-bottom: 1.5rem;
+}
+
+.va-walk-stats__item {
+	display: inline-block;
+	padding: 0.25rem 0.75rem;
+	font-size: 0.85rem;
+	font-weight: 500;
+	color: var(--wp--preset--color--grey-600);
+	background: var(--wp--preset--color--light);
+	border-radius: 4px;
+}
+
+.va-single-walk__description {
+	margin-bottom: 2rem;
+	line-height: 1.7;
+}
+
+.va-single-walk__map {
+	margin-bottom: 2rem;
+}
+
+.va-single-walk__start {
+	margin-top: 0.75rem;
+	font-size: 0.9rem;
+	color: var(--wp--preset--color--grey-600);
+}
+
+.va-single-walk__terrain {
+	margin-bottom: 2rem;
+}
+
+.va-single-walk__terrain-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+
+.va-single-walk__on-route {
+	margin-bottom: 2rem;
+}
+
+.va-single-walk__on-route ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.va-single-walk__on-route li {
+	padding: 0.5rem 0;
+}
+
+.va-single-walk__on-route a {
+	color: var(--wp--preset--color--teal);
+	text-decoration: none;
+}
+
+.va-single-walk__on-route a:hover {
+	text-decoration: underline;
+}
+
+.va-single-walk__parking,
+.va-single-walk__seasonal {
+	margin-bottom: 2rem;
+}
+
+.va-single-walk__highlights {
+	margin-bottom: 2rem;
+}
+
+.va-single-walk__highlight {
+	margin-bottom: 1.5rem;
+}
+
+.va-single-walk__highlight h3 {
+	margin: 0 0 0.5rem;
+}
+
+.va-single-walk__highlight p {
+	margin: 0 0 0.75rem;
+	color: var(--wp--preset--color--grey-600);
+}
+
+.va-single-walk__gallery {
+	margin-bottom: 2rem;
+}
+
+.va-single-walk__nearby {
+	margin-bottom: 2rem;
+}
+
+/* Single Event
+   ========================================================================== */
+
+.va-single-event__hero {
+	width: 100%;
+	max-height: 500px;
+	overflow: hidden;
+}
+
+.va-single-event__hero-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.va-single-event__header {
+	margin-bottom: 1rem;
+}
+
+.va-single-event__title {
+	color: var(--wp--preset--color--primary);
+	margin: 0 0 0.75rem;
+}
+
+.va-single-event__header .va-badge {
+	margin-right: 0.5rem;
+}
+
+.va-single-event__meta {
+	margin-bottom: 1.5rem;
+}
+
+.va-single-event__meta p {
+	margin: 0 0 0.35rem;
+}
+
+.va-single-event__date {
+	font-size: 1.1rem;
+	font-weight: 600;
+	color: var(--wp--preset--color--primary);
+}
+
+.va-single-event__time {
+	font-size: 0.95rem;
+	color: var(--wp--preset--color--grey-600);
+}
+
+.va-single-event__venue a {
+	color: var(--wp--preset--color--teal);
+	text-decoration: none;
+}
+
+.va-single-event__venue a:hover {
+	text-decoration: underline;
+}
+
+.va-single-event__description {
+	margin-bottom: 2rem;
+	line-height: 1.7;
+}
+
+.va-single-event__details {
+	margin-bottom: 2rem;
+}
+
+.va-single-event__details p {
+	margin: 0 0 0.5rem;
+}
+
+.va-single-event__btn {
+	display: inline-block;
+	padding: 0.65rem 1.5rem;
+	background: var(--wp--preset--color--accent);
+	color: var(--wp--preset--color--white);
+	border-radius: 6px;
+	font-weight: 600;
+	text-decoration: none;
+	transition: background 0.2s ease;
+}
+
+.va-single-event__btn:hover {
+	background: var(--wp--preset--color--primary);
+}
+
+.va-single-event__location {
+	margin-bottom: 2rem;
+}
+
+.va-single-event__address {
+	color: var(--wp--preset--color--grey-600);
+}
+
+/* Single Area
+   ========================================================================== */
+
+.va-single-area__hero {
+	width: 100%;
+	max-height: 500px;
+	overflow: hidden;
+}
+
+.va-single-area__hero-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.va-single-area__header {
+	margin-bottom: 1.5rem;
+}
+
+.va-single-area__title {
+	color: var(--wp--preset--color--primary);
+	margin: 0 0 0.5rem;
+}
+
+.va-single-area__type {
+	display: inline-block;
+	margin-bottom: 0.5rem;
+}
+
+.va-single-area__quick-facts {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	margin-bottom: 2rem;
+}
+
+.va-single-area__fact {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	padding: 0.35rem 0.85rem;
+	font-size: 0.85rem;
+	font-weight: 500;
+	color: var(--wp--preset--color--grey-600);
+	background: var(--wp--preset--color--light);
+	border-radius: 4px;
+}
+
+.va-single-area__intro,
+.va-single-area__history,
+.va-single-area__getting-there {
+	margin-bottom: 2rem;
+	line-height: 1.7;
+}
+
+.va-single-area__attractions {
+	margin-bottom: 2rem;
+}
+
+.va-single-area__attraction {
+	margin-bottom: 1.25rem;
+	padding-bottom: 1.25rem;
+	border-bottom: 1px solid var(--wp--preset--color--grey-200);
+}
+
+.va-single-area__attraction:last-child {
+	border-bottom: 0;
+	margin-bottom: 0;
+	padding-bottom: 0;
+}
+
+.va-single-area__attraction h3 {
+	margin: 0 0 0.35rem;
+	font-size: 1.15rem;
+}
+
+.va-single-area__attraction p {
+	margin: 0 0 0.5rem;
+	color: var(--wp--preset--color--grey-600);
+}
+
+.va-single-area__attraction a {
+	color: var(--wp--preset--color--teal);
+	text-decoration: none;
+	font-size: 0.9rem;
+	font-weight: 500;
+}
+
+.va-single-area__attraction a:hover {
+	text-decoration: underline;
+}
+
+.va-single-area__refreshments {
+	margin-bottom: 2rem;
+}
+
+.va-single-area__refreshments ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.va-single-area__refreshments li {
+	padding: 0.5rem 0;
+}
+
+.va-single-area__refreshments a {
+	color: var(--wp--preset--color--teal);
+	text-decoration: none;
+}
+
+.va-single-area__refreshments a:hover {
+	text-decoration: underline;
+}
+
+.va-single-area__fun-fact {
+	margin-bottom: 2rem;
+	padding: 1.25rem;
+	background: var(--wp--preset--color--light);
+	border-radius: 8px;
+	border-left: 4px solid var(--wp--preset--color--teal);
+}
+
+.va-single-area__fun-fact p {
+	margin: 0;
+	font-size: 0.95rem;
+	font-style: italic;
+	color: var(--wp--preset--color--primary);
+}
+
+.va-single-area__gallery,
+.va-single-area__walks,
+.va-single-area__listings,
+.va-single-area__events {
+	margin-bottom: 2rem;
+}
+
+/* Map — unified Leaflet container
+   ========================================================================== */
+
+.va-map {
+	width: 100%;
+	height: 300px;
+	border-radius: 8px;
+	overflow: hidden;
+	margin-bottom: 1rem;
+}
+
+.va-map--tall {
+	height: 450px;
+}
+
+/* Elevation profile below walk maps */
+.va-elevation-profile {
+	margin-bottom: 2rem;
+}
+
+.va-elevation-profile .elevation {
+	width: 100%;
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+.va-elevation-profile .elevation .area {
+	fill: var(--wp--preset--color--accent);
+	fill-opacity: 0.15;
+}
+
+.va-elevation-profile .elevation .line {
+	stroke: var(--wp--preset--color--accent);
+	stroke-width: 2;
+}

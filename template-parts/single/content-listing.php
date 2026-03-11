@@ -165,7 +165,7 @@ $feature_icons = array(
 					<?php endif; ?>
 
 					<?php if ( $latitude && $longitude ) : ?>
-						<div class="va-map" data-lat="<?php echo esc_attr( $latitude ); ?>" data-lng="<?php echo esc_attr( $longitude ); ?>" style="margin-top: 1.25rem; border-radius: 12px;"></div>
+						<div class="va-map" data-lat="<?php echo esc_attr( $latitude ); ?>" data-lng="<?php echo esc_attr( $longitude ); ?>" data-title="<?php echo esc_attr( $business_name ); ?>" data-category="<?php echo esc_attr( $category_name ); ?>" style="margin-top: 1.25rem; border-radius: 12px;"></div>
 					<?php endif; ?>
 
 				</div>

@@ -125,7 +125,7 @@ if ( $start_time ) {
 						</p>
 
 						<?php if ( $latitude && $longitude ) : ?>
-							<div class="va-map" data-lat="<?php echo esc_attr( $latitude ); ?>" data-lng="<?php echo esc_attr( $longitude ); ?>"></div>
+							<div class="va-map" data-lat="<?php echo esc_attr( $latitude ); ?>" data-lng="<?php echo esc_attr( $longitude ); ?>" data-title="<?php echo esc_attr( $venue_name ? $venue_name : $event_name ); ?>" data-category="Event"></div>
 						<?php endif; ?>
 					</div>
 				<?php endif; ?>

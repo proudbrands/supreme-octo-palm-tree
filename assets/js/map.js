@@ -5,9 +5,12 @@
  *
  *   data-gpx="<url>"           → Load GPX route, draw line, fit bounds, mark start/end.
  *   data-elevation="true"      → Also render elevation profile (requires leaflet-elevation).
- *   data-markers='<json>'      → Parse JSON array and place markers with popups.
+ *   data-markers='<json>'      → Parse JSON array and place custom markers with styled popups.
  *   data-lat / data-lng        → Fallback single marker at these coords, zoom 15.
  *   (none)                     → Centre on Aylesbury (51.8157, -0.8114) at zoom 13.
+ *
+ * Custom branded pins use L.divIcon with inline SVG. Popups are styled via
+ * .va-map-popup CSS class. Category colours map to the site's design tokens.
  *
  * All maps use OpenStreetMap tiles. Vanilla JS, no jQuery.
  *
@@ -25,10 +28,112 @@
 	var TILE_ATTR      = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 	var ACCENT         = '#E63946';
 	var TEAL           = '#2A9D8F';
+	var PRIMARY        = '#1D3557';
 	var FALLBACK_LAT   = 51.8157;
 	var FALLBACK_LNG   = -0.8114;
 	var FALLBACK_ZOOM  = 13;
 	var SINGLE_ZOOM    = 15;
+
+	/* Category → colour mapping for multi-marker maps. */
+	var CATEGORY_COLOURS = {
+		'restaurants':       ACCENT,
+		'cafes & coffee':    '#D4A574',
+		'cafes':             '#D4A574',
+		'pubs & bars':       '#C77D3A',
+		'pubs':              '#C77D3A',
+		'takeaways':         '#F4A261',
+		'hotels & b&bs':     '#6A5ACD',
+		'hotels':            '#6A5ACD',
+		'shopping':          '#E07BE0',
+		'health & beauty':   '#FF69B4',
+		'services':          '#888888',
+		'arts & culture':    '#9B59B6',
+		'sports & fitness':  TEAL,
+		'village':           TEAL,
+		'town':              PRIMARY,
+		'neighbourhood':     '#6A89CC',
+	};
+
+	/* -----------------------------------------------------------------------
+	 * Custom pin icon builder
+	 * -------------------------------------------------------------------- */
+
+	/**
+	 * Build an SVG map-pin icon as a Leaflet divIcon.
+	 *
+	 * @param {string} colour  Fill colour for the pin (hex).
+	 * @return {L.DivIcon}
+	 */
+	function vaPin( colour ) {
+		var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="30" height="40" viewBox="0 0 30 40">' +
+			'<path d="M15 0C6.716 0 0 6.716 0 15c0 10.65 13.28 23.92 13.84 24.48a1.62 1.62 0 0 0 2.32 0C16.72 38.92 30 25.65 30 15 30 6.716 23.284 0 15 0z" fill="' + colour + '"/>' +
+			'<circle cx="15" cy="14" r="6" fill="#fff" opacity="0.95"/>' +
+			'</svg>';
+
+		return L.divIcon( {
+			html:       svg,
+			className:  'va-map-pin',
+			iconSize:   [ 30, 40 ],
+			iconAnchor: [ 15, 40 ],
+			popupAnchor:[ 0, -36 ],
+		} );
+	}
+
+	/**
+	 * Get the pin colour for a given category string.
+	 */
+	function pinColour( category ) {
+		if ( ! category ) {
+			return ACCENT;
+		}
+		var key = category.toLowerCase().trim();
+		return CATEGORY_COLOURS[ key ] || ACCENT;
+	}
+
+	/* -----------------------------------------------------------------------
+	 * Popup builder
+	 * -------------------------------------------------------------------- */
+
+	/**
+	 * Build styled popup HTML for a marker item.
+	 *
+	 * @param {Object} item  Marker data { title, url|link, category }
+	 * @return {string}      HTML string
+	 */
+	function buildPopup( item ) {
+		var url = item.url || item.link || '';
+		var html = '<div class="va-map-popup">';
+
+		if ( item.category ) {
+			html += '<span class="va-map-popup__cat">' + escHtml( item.category ) + '</span>';
+		}
+
+		if ( item.title && url ) {
+			html += '<a href="' + escAttr( url ) + '" class="va-map-popup__title">' + escHtml( item.title ) + '</a>';
+		} else if ( item.title ) {
+			html += '<strong class="va-map-popup__title va-map-popup__title--plain">' + escHtml( item.title ) + '</strong>';
+		}
+
+		if ( url ) {
+			html += '<a href="' + escAttr( url ) + '" class="va-map-popup__link">View details &rarr;</a>';
+		}
+
+		html += '</div>';
+		return html;
+	}
+
+	/**
+	 * Basic HTML-escape for safe insertion.
+	 */
+	function escHtml( str ) {
+		var div = document.createElement( 'div' );
+		div.appendChild( document.createTextNode( str ) );
+		return div.innerHTML;
+	}
+
+	function escAttr( str ) {
+		return str.replace( /&/g, '&amp;' ).replace( /"/g, '&quot;' ).replace( /'/g, '&#39;' ).replace( /</g, '&lt;' ).replace( />/g, '&gt;' );
+	}
 
 	/* -----------------------------------------------------------------------
 	 * Helpers
@@ -135,7 +240,7 @@
 		.on( 'error', function () {
 			// GPX failed — fall back to single marker if coords exist.
 			if ( ! isNaN( lat ) && ! isNaN( lng ) ) {
-				L.marker( [ lat, lng ] ).addTo( map );
+				L.marker( [ lat, lng ], { icon: vaPin( ACCENT ) } ).addTo( map );
 			}
 		} )
 		.addTo( map );
@@ -167,21 +272,19 @@
 				return;
 			}
 
-			var marker = L.marker( [ lat, lng ] ).addTo( map );
+			var colour = pinColour( item.category );
+			var icon   = vaPin( colour );
+			var marker = L.marker( [ lat, lng ], { icon: icon } ).addTo( map );
 			bounds.extend( [ lat, lng ] );
 
-			// Build popup content.
-			var popupHtml = '';
-			if ( item.title && item.url ) {
-				popupHtml = '<a href="' + item.url + '">' + item.title + '</a>';
-			} else if ( item.title ) {
-				popupHtml = '<strong>' + item.title + '</strong>';
-			}
-			if ( item.category ) {
-				popupHtml += '<br><small>' + item.category + '</small>';
-			}
+			var popupHtml = buildPopup( item );
 			if ( popupHtml ) {
-				marker.bindPopup( popupHtml );
+				marker.bindPopup( popupHtml, {
+					className:  'va-map-popup-wrapper',
+					maxWidth:   240,
+					minWidth:   180,
+					closeButton: true,
+				} );
 			}
 		} );
 
@@ -206,8 +309,23 @@
 			return;
 		}
 
+		var title    = el.dataset.title    || '';
+		var category = el.dataset.category || '';
+
 		map.setView( [ lat, lng ], SINGLE_ZOOM );
-		L.marker( [ lat, lng ] ).addTo( map );
+
+		var colour = pinColour( category );
+		var marker = L.marker( [ lat, lng ], { icon: vaPin( colour ) } ).addTo( map );
+
+		if ( title ) {
+			var popupHtml = buildPopup( { title: title, category: category } );
+			marker.bindPopup( popupHtml, {
+				className:  'va-map-popup-wrapper',
+				maxWidth:   240,
+				minWidth:   180,
+				closeButton: true,
+			} );
+		}
 	}
 
 	/* -----------------------------------------------------------------------

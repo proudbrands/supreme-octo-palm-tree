@@ -85,7 +85,7 @@ if ( count( $listing_tax_query ) > 1 ) {
 
 		<?php if ( $latitude && $longitude ) : ?>
 			<div class="va-single-area__map">
-				<div class="va-map" data-lat="<?php echo esc_attr( $latitude ); ?>" data-lng="<?php echo esc_attr( $longitude ); ?>"></div>
+				<div class="va-map" data-lat="<?php echo esc_attr( $latitude ); ?>" data-lng="<?php echo esc_attr( $longitude ); ?>" data-title="<?php echo esc_attr( $area_name ); ?>" data-category="<?php echo esc_attr( $area_type ); ?>"></div>
 			</div>
 		<?php endif; ?>
 

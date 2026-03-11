@@ -82,15 +82,42 @@
 	}
 
 	/* =========================================================
+	   Horizontal scroll arrow navigation
+	   ========================================================= */
+	function initScrollNavs() {
+		document.querySelectorAll( '.va-xp-scroll' ).forEach( function ( wrapper ) {
+			var track = wrapper.querySelector( '.va-xp-scroll__track' );
+			var prev = wrapper.querySelector( '.va-xp-scroll__nav--prev' );
+			var next = wrapper.querySelector( '.va-xp-scroll__nav--next' );
+			if ( ! track ) return;
+
+			var scrollAmount = 520;
+
+			if ( prev ) {
+				prev.addEventListener( 'click', function () {
+					track.scrollBy( { left: -scrollAmount, behavior: 'smooth' } );
+				} );
+			}
+			if ( next ) {
+				next.addEventListener( 'click', function () {
+					track.scrollBy( { left: scrollAmount, behavior: 'smooth' } );
+				} );
+			}
+		} );
+	}
+
+	/* =========================================================
 	   Init on DOM ready
 	   ========================================================= */
 	if ( document.readyState === 'loading' ) {
 		document.addEventListener( 'DOMContentLoaded', function () {
 			initCardFadeIn();
 			initSmoothScroll();
+			initScrollNavs();
 		} );
 	} else {
 		initCardFadeIn();
 		initSmoothScroll();
+		initScrollNavs();
 	}
 } )();

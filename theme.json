@@ -17,7 +17,8 @@
         { "slug": "light", "color": "#F1FAEE", "name": "Light" },
         { "slug": "grey-600", "color": "#555555", "name": "Grey 600" },
         { "slug": "grey-200", "color": "#E5E5E5", "name": "Grey 200" },
-        { "slug": "white", "color": "#FFFFFF", "name": "White" }
+        { "slug": "white", "color": "#FFFFFF", "name": "White" },
+        { "slug": "surface", "color": "#F7F7F9", "name": "Surface" }
       ],
       "defaultPalette": false,
       "defaultGradients": false,
@@ -102,7 +103,7 @@
   },
   "styles": {
     "color": {
-      "background": "var(--wp--preset--color--white)",
+      "background": "var(--wp--preset--color--surface)",
       "text": "#333333"
     },
     "typography": {

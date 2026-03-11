@@ -2,7 +2,7 @@
 /**
  * Card: Event
  *
- * Approved component from docs/components.md.
+ * Vertical card with inset image, compact date block + details.
  * Receives post ID via $args['post_id'].
  *
  * @package VisitAylesbury
@@ -43,13 +43,17 @@ if ( $start_time ) {
 
 <article class="va-card va-card--event">
 	<a href="<?php echo esc_url( get_permalink( $post_id ) ); ?>" class="va-card__link">
-		<div class="va-card__image">
-			<?php if ( $hero_image_id ) : ?>
-				<?php echo wp_get_attachment_image( $hero_image_id, 'va-card-thumb', false, array( 'class' => 'va-card__img', 'loading' => 'lazy' ) ); ?>
-			<?php endif; ?>
-			<?php if ( $is_free ) : ?>
-				<span class="va-badge va-badge--free">Free</span>
-			<?php endif; ?>
+		<div class="va-card__image-wrap">
+			<div class="va-card__image">
+				<?php if ( $hero_image_id ) : ?>
+					<?php echo wp_get_attachment_image( $hero_image_id, 'va-card-thumb', false, array( 'class' => 'va-card__img', 'loading' => 'lazy' ) ); ?>
+				<?php else : ?>
+					<div class="va-card__image--placeholder"></div>
+				<?php endif; ?>
+				<?php if ( $is_free ) : ?>
+					<span class="va-badge va-badge--free">Free</span>
+				<?php endif; ?>
+			</div>
 		</div>
 		<div class="va-card__body">
 			<div class="va-card__date">

@@ -55,14 +55,12 @@ get_header();
 			<?php if ( $listings->have_posts() ) : ?>
 
 				<?php
-				// Build markers JSON for the directory map.
 				$markers = array();
 				while ( $listings->have_posts() ) :
 					$listings->the_post();
-					$lid  = get_the_ID();
-					$lat  = get_field( 'latitude', $lid );
-					$lng  = get_field( 'longitude', $lid );
-
+					$lid = get_the_ID();
+					$lat = get_field( 'latitude', $lid );
+					$lng = get_field( 'longitude', $lid );
 					if ( $lat && $lng ) {
 						$cat_terms = wp_get_post_terms( $lid, 'business_category', array( 'fields' => 'names' ) );
 						$markers[] = array(

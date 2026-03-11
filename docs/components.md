@@ -18,16 +18,22 @@ All cards share the `.va-card` base class. Every card variant (`--listing`, `--e
 ```css
 .va-card {
   background: white;
-  border-radius: 12px;
+  border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
   /* hover: shadow 0 8px 25px rgba(0,0,0,0.08), 0 4px 10px rgba(0,0,0,0.04) + translateY(-3px) */
 }
 ```
 
-**Card image**: aspect-ratio 16/10, image scales to 1.03 on hover (0.4s ease). Placeholder uses `#f5f5f5` with centred SVG landscape icon.
+**Inset image wrapper**: All standard cards (listing, event, walk, guide) use `.va-card__image-wrap` with `padding: 0.75rem 0.75rem 0` to create a white border effect around the image.
 
-**Card body**: padding 1.25rem. Title is 1.05rem/600, single line with ellipsis overflow. Tagline 0.9rem `#666`, 2-line clamp. Meta row flex with gap 0.5rem, 0.8rem `#888`.
+**Card image**: aspect-ratio 3/2, `border-radius: 12px`, image scales to 1.03 on hover (0.4s ease). Placeholder uses `#f5f5f5` with centred SVG landscape icon.
+
+**Card body**: padding `1rem 1.25rem 1.25rem`. Title is 1.05rem/600 primary colour, single line with ellipsis overflow. Tagline 0.9rem `#666`, 2-line clamp.
+
+**Card divider**: `<hr class="va-card__divider">` — `border-top: 1px solid #e8e8ec`, separates tagline from meta row.
+
+**Card meta row**: `display: flex; justify-content: space-between; align-items: center;` — 0.8rem `#888`. Left side has `.va-card__meta-item` with SVG icon + text. Right side has `.va-card__price` in teal.
 
 Image size: `va-card-thumb` registered at 480×300, hard crop.
 
@@ -40,24 +46,30 @@ Used on: directory archive, food-and-drink pages, homepage featured, area pages,
 
 ```html
 <article class="va-card va-card--listing">
-  <a href="<?php echo esc_url( get_permalink() ); ?>" class="va-card__link">
-    <div class="va-card__image">
-      <?php echo wp_get_attachment_image( $hero_image_id, 'va-card-thumb', false, ['class' => 'va-card__img', 'loading' => 'lazy'] ); ?>
-      <?php if ( $category_name ) : ?>
-        <span class="va-badge va-badge--category"><?php echo esc_html( $category_name ); ?></span>
-      <?php endif; ?>
-      <?php if ( $tier === 'featured' || $tier === 'premium' || $tier === 'sponsor' ) : ?>
-        <span class="va-badge va-badge--featured">Featured</span>
-      <?php endif; ?>
+  <a href="..." class="va-card__link">
+    <div class="va-card__image-wrap">
+      <div class="va-card__image">
+        <?php echo wp_get_attachment_image( $hero_id, 'va-card-thumb', false, ['class' => 'va-card__img', 'loading' => 'lazy'] ); ?>
+        <?php if ( $category_name ) : ?>
+          <span class="va-card__cat-pill">
+            <span class="va-card__cat-pill-emoji"><?php echo esc_html( $emoji ); ?></span>
+            <?php echo esc_html( $category_name ); ?>
+          </span>
+        <?php endif; ?>
+      </div>
     </div>
     <div class="va-card__body">
       <h3 class="va-card__title"><?php echo esc_html( $business_name ); ?></h3>
       <?php if ( $tagline ) : ?>
         <p class="va-card__tagline"><?php echo esc_html( $tagline ); ?></p>
       <?php endif; ?>
+      <hr class="va-card__divider">
       <div class="va-card__meta">
         <?php if ( $area_name ) : ?>
-          <span class="va-card__area"><?php echo esc_html( $area_name ); ?></span>
+          <span class="va-card__meta-item">
+            <svg class="va-card__meta-icon"><!-- map-pin SVG --></svg>
+            <?php echo esc_html( $area_name ); ?>
+          </span>
         <?php endif; ?>
         <?php if ( $price_range ) : ?>
           <span class="va-card__price"><?php echo esc_html( $price_range ); ?></span>
@@ -69,9 +81,24 @@ Used on: directory archive, food-and-drink pages, homepage featured, area pages,
 ```
 
 Listing-specific styles:
+- Category pill on image: white pill with emoji + category name, `border-radius: 20px`, positioned `top: 0.65rem; left: 0.65rem`
 - Featured/premium listings get a 3px left border in accent red via `.va-card--featured` or `.va-card--premium`
-- Dot separator between area name and price range via `::before` pseudo
-- Price range displayed in teal
+- Meta icon: 14×14px SVG map pin in accent colour
+- Price range displayed in teal, right-aligned via `margin-left: auto`
+
+Category emoji map (used in card-listing.php):
+| Category | Emoji |
+|----------|-------|
+| Restaurants | 🍽️ |
+| Cafes & Coffee | ☕ |
+| Pubs & Bars | 🍺 |
+| Takeaways | 🥡 |
+| Hotels & B&Bs | 🏨 |
+| Shopping | 🛍️ |
+| Health & Beauty | 💆 |
+| Services | 🔧 |
+| Arts & Culture | 🎭 |
+| Sports & Fitness | ⚽ |
 
 ---
 
@@ -80,12 +107,11 @@ Used on: events hub, homepage what's on row, area pages
 
 ```html
 <article class="va-card va-card--event">
-  <a href="<?php echo esc_url( get_permalink() ); ?>" class="va-card__link">
-    <div class="va-card__image">
-      <?php echo wp_get_attachment_image( $hero_image_id, 'va-card-thumb', false, ['class' => 'va-card__img', 'loading' => 'lazy'] ); ?>
-      <?php if ( $is_free ) : ?>
-        <span class="va-badge va-badge--free">Free</span>
-      <?php endif; ?>
+  <a href="..." class="va-card__link">
+    <div class="va-card__image-wrap">
+      <div class="va-card__image">
+        <?php echo wp_get_attachment_image( $hero_id, 'va-card-thumb', false, ['class' => 'va-card__img', 'loading' => 'lazy'] ); ?>
+      </div>
     </div>
     <div class="va-card__body">
       <div class="va-card__date">
@@ -107,9 +133,12 @@ Used on: events hub, homepage what's on row, area pages
 ```
 
 Event-specific styles:
-- Card body is flexbox: 56×56px date block left, details right
-- Date block: light cream bg, rounded, centred text. Day 1.35rem/700 in accent red, month 0.65rem/600 uppercase with 0.05em letter-spacing in `#888`
-- Venue 0.85rem `#666`, time 0.8rem teal
+- Card body is flexbox: 52×52px date block left, details right, gap 0.85rem
+- Date block: `#f7f7f9` bg (surface colour), `border-radius: 10px`, centred text
+- Day: 1.15rem/700 in accent red, line-height 1
+- Month: 0.6rem/600 uppercase, `letter-spacing: 0.05em`, `#888`
+- Venue: 0.85rem `#666`
+- Time: 0.8rem teal
 
 ---
 
@@ -118,12 +147,16 @@ Used on: the-vale/walks, area pages, Walk of the Week
 
 ```html
 <article class="va-card va-card--walk">
-  <a href="<?php echo esc_url( get_permalink( $post_id ) ); ?>" class="va-card__link">
-    <div class="va-card__image">
-      <?php echo wp_get_attachment_image( $hero_image_id, 'va-card-thumb', false, ['class' => 'va-card__img', 'loading' => 'lazy'] ); ?>
-      <?php if ( $difficulty ) : ?>
-        <span class="va-badge va-badge--<?php echo esc_attr( strtolower( $difficulty ) ); ?>"><?php echo esc_html( $difficulty ); ?></span>
-      <?php endif; ?>
+  <a href="..." class="va-card__link">
+    <div class="va-card__image-wrap">
+      <div class="va-card__image">
+        <?php echo wp_get_attachment_image( $hero_id, 'va-card-thumb', false, ['class' => 'va-card__img', 'loading' => 'lazy'] ); ?>
+        <?php if ( $difficulty ) : ?>
+          <span class="va-badge va-badge--<?php echo esc_attr( strtolower( $difficulty ) ); ?>">
+            <?php echo esc_html( $difficulty ); ?>
+          </span>
+        <?php endif; ?>
+      </div>
     </div>
     <div class="va-card__body">
       <h3 class="va-card__title"><?php echo esc_html( $walk_name ); ?></h3>
@@ -133,35 +166,16 @@ Used on: the-vale/walks, area pages, Walk of the Week
         <?php if ( $dog_friendly ) : ?>
           <span class="va-card__stat va-card__stat--dog">Dog friendly</span>
         <?php endif; ?>
-        <?php if ( $pushchair ) : ?>
-          <span class="va-card__stat">Pushchair friendly</span>
-        <?php endif; ?>
       </div>
-      <?php if ( $terrain && is_array( $terrain ) ) : ?>
-        <div class="va-card__terrain">
-          <?php foreach ( $terrain as $type ) : ?>
-            <span class="va-card__terrain-tag"><?php echo esc_html( ucfirst( $type ) ); ?></span>
-          <?php endforeach; ?>
-        </div>
-      <?php endif; ?>
-      <?php if ( $parking ) : ?>
-        <p class="va-card__parking"><?php echo esc_html( $parking ); ?></p>
-      <?php endif; ?>
-      <?php if ( $seasonal_notes ) : ?>
-        <p class="va-card__seasonal"><?php echo esc_html( $seasonal_notes ); ?></p>
-      <?php endif; ?>
     </div>
   </a>
 </article>
 ```
 
 Walk-specific styles:
-- Stats use pill-shaped tags: `#f5f5f5` bg, 20px border-radius, 0.75rem/500
+- Stats use pill-shaped tags: `background: #f2f1ed`, `border-radius: 20px`, `0.75rem/500`, `padding: 0.3rem 0.75rem`
 - Dog friendly stat has `va-card__stat--dog` which adds a paw emoji via `::before`
-- Difficulty colour: easy=teal, moderate=amber `#f59e0b`, challenging=accent red
-- Terrain tags: small inline tags below stats
-- Parking: 0.8rem, 2-line clamp
-- Seasonal notes: italic with top border, 0.75rem, 2-line clamp
+- Difficulty badge positioned on image: easy=teal, moderate=amber `#f59e0b`, challenging=accent red
 
 ---
 
@@ -170,14 +184,11 @@ Used on: the-vale hub, homepage explore section
 
 ```html
 <article class="va-card va-card--area">
-  <a href="<?php echo esc_url( get_permalink( $post_id ) ); ?>" class="va-card__link">
-    <div class="va-card__image va-card__image--wide">
-      <?php echo wp_get_attachment_image( $hero_image_id, 'va-card-wide', false, ['class' => 'va-card__img', 'loading' => 'lazy'] ); ?>
+  <a href="..." class="va-card__link">
+    <div class="va-card__image va-card__image--area">
+      <?php echo wp_get_attachment_image( $hero_id, 'va-card-wide', false, ['class' => 'va-card__img', 'loading' => 'lazy'] ); ?>
       <div class="va-card__overlay">
         <h3 class="va-card__title"><?php echo esc_html( $area_name ); ?></h3>
-        <?php if ( $population ) : ?>
-          <p class="va-card__population"><?php echo esc_html( $population ); ?></p>
-        <?php endif; ?>
       </div>
     </div>
   </a>
@@ -185,11 +196,44 @@ Used on: the-vale hub, homepage explore section
 ```
 
 Area-specific styles:
-- Image aspect-ratio 16/9 (wider than standard cards)
-- Gradient overlay from transparent to `rgba(0,0,0,0.7)` on the image
-- Title overlaid on image bottom: white, 1.2rem/600, text-shadow for readability
+- No inset image wrapper — image goes edge-to-edge
+- Image aspect-ratio 16/10, `border-radius: 16px`
+- Gradient overlay from transparent to `rgba(0,0,0,0.65)` on the image
+- Title overlaid on image bottom: white, 1.15rem/600, text-shadow for readability
 - No separate body section — text sits on the image
-- Population in `rgba(255,255,255,0.8)`
+- Hover: image scales to 1.04 (not default 1.03)
+
+---
+
+## Category Pill (on card images) ✅
+
+White pill positioned on card images showing emoji + category name.
+
+```html
+<span class="va-card__cat-pill">
+  <span class="va-card__cat-pill-emoji">🍽️</span>
+  Restaurants
+</span>
+```
+
+```css
+.va-card__cat-pill {
+  position: absolute;
+  top: 0.65rem;
+  left: 0.65rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.7rem;
+  background: white;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--wp--preset--color--primary);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+```
 
 ---
 
@@ -224,8 +268,8 @@ Variants:
 | `--moderate` | `rgba(245,158,11,0.9)` (amber 90%) | dark |
 | `--challenging` | `rgba(230,57,70,0.9)` (accent 90%) | white |
 
-Position on card images: `position: absolute; top: 0.75rem; left: 0.75rem; z-index: 2;`
-Second badge: `left: auto; right: 0.75rem;`
+Position on card images: `position: absolute; top: 0.65rem; left: 0.65rem; z-index: 2;`
+Second badge: `left: auto; right: 0.65rem;`
 
 ---
 
@@ -239,7 +283,8 @@ Responsive card grid. Used everywhere cards appear.
 </div>
 ```
 
-- Gap: 1rem on mobile, 1.5rem from 640px
+- Gap: `1.5rem` always
+- `va-grid--2`: 1 col → 2 col (768px)
 - `va-grid--3`: 1 col → 2 col (640px) → 3 col (1024px)
 - `va-grid--4`: 1 col → 2 col (640px) → 3 col (1024px) → 4 col (1280px)
 
@@ -261,8 +306,7 @@ Used for: homepage event row, "more like this" sections
 - Flex row, gap 1rem, overflow-x auto, scroll-snap-type x mandatory
 - Hidden scrollbar (both webkit and Firefox)
 - Children: 280px on mobile, 320px on desktop, scroll-snap-align start
-- Right-edge gradient fade hint via `::after` pseudo-element (white→transparent)
-- Gradient adapts to section background (light/dark variants)
+- Right-edge gradient fade hint via `::after` pseudo-element (adapts to section bg)
 
 ---
 
@@ -270,23 +314,28 @@ Used for: homepage event row, "more like this" sections
 
 Used to introduce every homepage and hub page section.
 
+### With link variant:
 ```html
 <div class="va-section-header">
-  <h2 class="va-section-header__title"><?php echo esc_html( $title ); ?></h2>
-  <?php if ( $link_url ) : ?>
-    <a href="<?php echo esc_url( $link_url ); ?>" class="va-section-header__link">
-      <?php echo esc_html( $link_text ); ?>
-    </a>
-  <?php endif; ?>
+  <h2 class="va-section-header__title">Section Title</h2>
+  <a href="..." class="va-section-header__link">View all</a>
 </div>
 ```
 
-- Flex row, space-between, baseline aligned, margin-bottom 1.5rem
-- Title uses fluid clamp() sizing, no extra margin
-- Link: 0.9rem/500 teal with arrow `→` via `::after` pseudo
-- On hover: arrow translates X 3px as a motion hint
+### With button variant:
+```html
+<div class="va-section-header">
+  <h2 class="va-section-header__title">Section Title</h2>
+  <a href="..." class="va-section-header__btn">View all →</a>
+</div>
+```
 
-Note: the arrow is generated by CSS `::after`. Do NOT include the arrow character in the HTML.
+- Flex row, space-between, baseline aligned, `margin-bottom: 2rem`
+- Title: `clamp(1.35rem, 3vw, 1.75rem)`, 700 weight, primary colour
+- **Link**: 0.9rem/500 teal with arrow `→` via `::after` pseudo, hover translateX 3px
+- **Button**: white bg, `border: 1px solid primary`, `border-radius: 8px`, `padding: 0.6rem 1.25rem`, 0.85rem/500. Hover: primary bg, white text.
+
+Note: the arrow on the link variant is generated by CSS `::after`. Do NOT include the arrow character in the HTML.
 
 ---
 
@@ -295,19 +344,44 @@ Note: the arrow is generated by CSS `::after`. Do NOT include the arrow characte
 For filter bars on archive pages. Horizontal scrollable row.
 
 ```html
-<div class="va-pill-row">
-  <a href="..." class="va-pill is-active">All</a>
-  <a href="..." class="va-pill">Restaurants</a>
-  <a href="..." class="va-pill">Cafes</a>
-  <a href="..." class="va-pill">Pubs</a>
+<div class="va-filter-bar">
+  <div class="va-filter-bar__inner">
+    <div class="va-pill-row">
+      <a href="..." class="va-pill is-active">All</a>
+      <a href="..." class="va-pill">Restaurants</a>
+      <a href="..." class="va-pill">Cafes</a>
+    </div>
+  </div>
 </div>
 ```
 
-- Horizontal scroll on mobile (same snap pattern as scroll row)
-- Each pill: white bg, 1px `#e5e5e5` border, 20px radius, 0.85rem/500, `#555` text
-- Hover: border and text become teal
+- Horizontal scroll on mobile (snap pattern)
+- Each pill: white bg, `1px solid #e8e8ec` border, `border-radius: 24px`, `padding: 0.5rem 1.25rem`, 0.85rem/500, `#555` text
+- Hover: border and text become primary colour
 - Active: primary bg, white text, border transparent
 - Hidden scrollbar
+
+---
+
+## Buttons ✅
+
+Three global button variants:
+
+```html
+<!-- Solid (primary CTA) -->
+<a href="..." class="va-btn">Search</a>
+
+<!-- Outline -->
+<a href="..." class="va-btn va-btn--secondary">View all</a>
+
+<!-- Dark -->
+<a href="..." class="va-btn va-btn--dark">Learn more</a>
+```
+
+- **Solid** (`.va-btn`): accent bg, white text, `border-radius: 10px`, `padding: 0.75rem 1.5rem`, 600 weight. Hover: primary bg.
+- **Outline** (`.va-btn--secondary`): white bg, primary text, `border: 1px solid primary`. Hover: primary bg, white text.
+- **Dark** (`.va-btn--dark`): primary bg, white text. Hover: slightly lighter.
+- All buttons: `min-height: 44px`, `transition: 0.2s ease`.
 
 ---
 
@@ -327,10 +401,57 @@ Full-width section, typically inside `.va-section--dark`.
 ```
 
 - Centred text, max-width 560px
-- Heading: 1.5rem white. Subtitle: 1rem `rgba(255,255,255,0.7)`, max-width 500px
+- Heading: 1.5rem white. Subtitle: 1rem `rgba(255,255,255,0.7)`
 - Form: stacked on mobile, inline (flex-row) from 640px
-- Input: `rgba(255,255,255,0.1)` bg, `rgba(255,255,255,0.2)` border, white text, placeholder at 0.4 opacity. On desktop: left-rounded only (8px 0 0 8px). On mobile: fully rounded (8px).
-- Button: accent red bg, white text, 0.85rem 2rem padding, 600 weight. On desktop: right-rounded only. On mobile: fully rounded. Min-height 44px.
+- Input: `rgba(255,255,255,0.1)` bg, `rgba(255,255,255,0.2)` border, white text. Desktop: left-rounded only. Mobile: fully rounded.
+- Button: accent red bg, white text, 1rem/600. Desktop: right-rounded only. Mobile: fully rounded. Min-height 44px.
+
+---
+
+## Single Listing Sidebar ✅
+
+Sticky sidebar card on single listing pages (38% width column).
+
+```css
+.va-sidebar-card {
+  border: 1px solid #e8e8ec;
+  border-radius: 16px;
+  padding: 1.75rem;
+}
+```
+
+- Contact rows: SVG icon (20×20px, teal) + text, `gap: 0.75rem`, `padding: 0.65rem 0`, `border-bottom: 1px solid #f0f0f0`
+- Opening hours: dedicated `va-sidebar-card__hours` section with table
+- Map: `border-radius: 12px`, `margin-top: 1.25rem`
+
+---
+
+## Archive Header ✅
+
+Used on all archive/taxonomy pages above the filter bar.
+
+```html
+<div class="va-container">
+  <div class="va-archive-header">
+    <h1>Page Title</h1>
+    <p>Optional description</p>
+  </div>
+</div>
+```
+
+- `padding: 2rem 0 1rem`
+- H1: primary colour, clamp sizing
+- Description: grey-600
+
+---
+
+## Spacing Rhythm ✅
+
+- `.va-section`: `padding: 3rem 0` mobile, `padding: 5rem 0` from 1024px
+- Section header: `margin-bottom: 2rem`
+- Grid gap: `1.5rem` always
+- Page background: surface colour `#F7F7F9`
+- Cards: white background for depth contrast
 
 ---
 

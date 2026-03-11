@@ -1990,8 +1990,18 @@ header.wp-block-group > .wp-block-group {
 	box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
 	padding-block: 1rem;
 	position: sticky;
-	top: 60px;
+	top: 64px;
 	z-index: 50;
+}
+
+.admin-bar .va-filter-bar {
+	top: calc(64px + 32px);
+}
+
+@media (max-width: 782px) {
+	.admin-bar .va-filter-bar {
+		top: calc(64px + 46px);
+	}
 }
 
 .va-filter-bar__inner {

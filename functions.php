@@ -19,3 +19,4 @@ require_once VA_THEME_DIR . '/inc/acf-fields.php';
 require_once VA_THEME_DIR . '/inc/blocks.php';
 require_once VA_THEME_DIR . '/inc/schema.php';
 require_once VA_THEME_DIR . '/inc/helpers.php';
+require_once VA_THEME_DIR . '/inc/gravity-forms.php';

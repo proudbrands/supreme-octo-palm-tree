@@ -13,6 +13,23 @@ get_header();
 	<div class="va-container">
 		<div class="va-archive-header">
 			<h1><?php esc_html_e( "What's On in Aylesbury", 'visitaylesbury' ); ?></h1>
+			<?php
+			$submit_page = get_pages( array(
+				'meta_key'   => '_wp_page_template',
+				'meta_value' => 'page-submit-event.php',
+				'number'     => 1,
+			) );
+			$submit_url = $submit_page ? get_permalink( $submit_page[0]->ID ) : '';
+			if ( $submit_url ) :
+			?>
+				<a href="<?php echo esc_url( $submit_url ); ?>" class="va-btn va-btn--accent va-archive-header__submit">
+					<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+						<line x1="12" y1="5" x2="12" y2="19"></line>
+						<line x1="5" y1="12" x2="19" y2="12"></line>
+					</svg>
+					<?php esc_html_e( 'Add Your Event', 'visitaylesbury' ); ?>
+				</a>
+			<?php endif; ?>
 		</div>
 	</div>
 
